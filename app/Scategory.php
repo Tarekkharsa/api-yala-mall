@@ -10,4 +10,7 @@ class Scategory extends Model
         return $this->belongsToMany('App\Shop' , 'shop_categories' , 'scategory_id' , 'shop_id');
     }
 
+    public function pCategory(){
+        return $this->hasMany(Pcategory::class);
+    }
 }

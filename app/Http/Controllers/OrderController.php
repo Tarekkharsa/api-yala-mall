@@ -153,44 +153,31 @@ class OrderController extends MyFunction
        
 
 
-        
+    //check if products are the same mall
        $mall_id = $this->getMallId($orderProducts[0]->product_id);
-           
        foreach($orderProducts as $product){
            $row = $this->getMallId($product->product_id); 
-          
            if ($row != $mall_id) {
                return response()->json(['status' => 'error' , 'message' => 'products are not in the same Mall' ] , 400);
            }
  
        }
 
-       $productsDetails = array();
+      
 
-        // calculate price of products
+        // calculate price of products create array allProductsDetails=> marge array customer(orderProducts) and array ProductsDetails from DataBase
         $i=0;
         $price = 0;
-        $test = array();
+        $allProductsDetails = array();
         foreach($orderProducts as $product){
-            //$row = Product::find($product->product_id)->with('shop')->first();
-            $row = Product::where('id',$product->product_id)->with('shop')->get();
-          
-        //    $shopIdToShopArray[$row->shop->id] = $row->shop;
-            //array_push($productsDetails, $row);    
-            
-            $test[$i]['id']=$product->product_id;
-            $test[$i]['notes']=$product->notes;
-            $test[$i]['quantity']=$product->quantity;
-            $test[$i]['shop_id']=$row[0]->shop_id;
-            $test[$i]['price']=$row[0]->price;
-            $test[$i]['discount']=$row[0]->discount;
-            
-           
+            $row = Product::where('id',$product->product_id)->with('shop')->get();    
 
-            if($product->product_id == $row[0]->id ){
-                //  array_push($orderProducts,[ 0 =>$row]);
-                
-            }
+            $allProductsDetails[$i]['id']=$product->product_id;
+            $allProductsDetails[$i]['notes']=$product->notes;
+            $allProductsDetails[$i]['quantity']=$product->quantity;
+            $allProductsDetails[$i]['shop_id']=$row[0]->shop_id;
+            $allProductsDetails[$i]['price']=$row[0]->price;
+            $allProductsDetails[$i]['discount']=$row[0]->discount;
             if (empty($row)) {
                 return response()->json(['status' => 'error' , 'message' =>  __('errors.invalid-products') ] , 400);
             }
@@ -201,18 +188,29 @@ class OrderController extends MyFunction
             $i++;
         }
 
-        
 
-        
-
+      
+   // check sale of shop and min Total Shop Cost
         $allShops = array();
-   // discount of shop
+        $minTotalShopCost = 0 ;
         $shopDiscount = 0;
         foreach ($orderProducts as  $product) {         
      
          $productTmp = Product::find($product->product_id);
-        $shop = Shop::where('id', $productTmp->shop_id)->first();
+         $shop = Shop::where('id', $productTmp->shop_id)->first();
         
+        for($i = 0 ; $i< count($allProductsDetails); $i++){
+            
+            if($allProductsDetails[$i]['shop_id'] == $shop->id){
+                $minTotalShopCost = $minTotalShopCost + $allProductsDetails[$i]['price'] * $allProductsDetails[$i]['quantity'] ;
+            }
+        }
+
+        if($minTotalShopCost <= $shop->min_order_cost){
+            return response()->json(['status' => 'error' , 'message' => __('errors.price-in-not-equal-the-mi-order-cost') ] , 400);
+          }
+
+          
         if(!in_array($shop,$allShops)){
             array_push($allShops, $shop); 
         }
@@ -232,38 +230,12 @@ class OrderController extends MyFunction
   
 
 
-        // return response()->json(['status' => 'error' , 'message' => 'xxxxxxxxxxxx prodducts'.$price . ' ' . $shopDiscount ] , 200);
+        // check order time if noll and insert it
         $orderTime = $this->checkParam($request->order_time);
         if ($orderTime == NULL) $orderTime = Carbon::now();
-                    //   return response()->json(['status' => 'error'.$orderTime , 'message' => 'xy'.print_r($request->products, TRUE), 'data' => null ] , 400);
- 
-
-                    // /////////////////
-             
-                    // $productShops = array();
-                    
-                    // $i=1;
-                    // foreach ($allShops as  $shop) {
-                    //    //  array_push($productShops, $shop); 
-                      
-                    //     foreach ($productsDetails as  $product) {
-                            
-                    //         if($product->shop_id ==$shop->id ){
-                    //             $productShops[$shop->id][$i] = $product;
-                        
-                    //         }
-                            
-                    //         $i++;
-                    //     }
-                    //   //  return response()->json(['product->shop_id' => $productShops] , 200);
-                        
-                    // }
-
-
+                  
   
-                    // ///////////////
-
-
+        // insert order
         $order = new Order;
         $order->order_time           = $this->checkParam($orderTime) ;
         
@@ -274,37 +246,40 @@ class OrderController extends MyFunction
         $order->order_status_id            = 1;
         $order->save();
 
-
-
-   
-        foreach ($allShops as  $shop) {
+        $totalBill = 0;
+                                                                 // insert bill to each shop and many billProduct to each bill
+        // MAIN Foreach TO Add bell for each Shop
+        foreach ($allShops as  $shop) {          
+            // Calculate The Total Price For The Shop bill 
+            for($i = 0 ; $i< count($allProductsDetails); $i++){
+            
+                if($allProductsDetails[$i]['shop_id'] == $shop->id){
+                    $totalBill = $totalBill + $allProductsDetails[$i]['price'] * $allProductsDetails[$i]['quantity'] ;
+                }
+            }
 
             $bill = new Bill;
             $bill->order_id =  $order->id;
             $bill->shop_id =  $shop->id;
-            $bill->price =  $final_price;
+            $bill->price =  $totalBill;
             $bill->save();
+            $totalBill = 0;   
+          for($i = 0 ; $i< count($allProductsDetails); $i++){
             
-
-               
-          for($i = 0 ; $i< count($test); $i++){
-            
-              if($test[$i]['shop_id'] == $shop->id){
+              if($allProductsDetails[$i]['shop_id'] == $shop->id){
 
                 $billProduct = new BillProduct;
-                $billProduct->product_id =  $test[$i]['id'];
+                $billProduct->product_id =  $allProductsDetails[$i]['id'];
                 $billProduct->bill_id   =   $bill->id;
-                $billProduct->sale =  $test[$i]['discount'];
-                $billProduct->quantity   = $test[$i]['quantity'];
-                $billProduct->notes      =$test[$i]['notes'];
+                $billProduct->sale =  $allProductsDetails[$i]['discount'];
+                $billProduct->quantity   = $allProductsDetails[$i]['quantity'];
+                $billProduct->notes      =$allProductsDetails[$i]['notes'];
                 $billProduct->save();
               }
           }
     
         }
-
-     
-         //return response()->json([  'message' => __('errors.ok')  , 'data' => $bill ] , 200);
+ 
         return response()->json([  'message' => __('errors.ok')  , 'data' => Order::find($order->id)] , 200);
     }
 

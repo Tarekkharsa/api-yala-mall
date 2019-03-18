@@ -67,4 +67,8 @@ Route::get('/getProducts', 'ProductController@getProducts');
 Route::get('/getCustomerOrders', 'OrderController@getCustomerOrders');
 
 
-Route::get('/test/{id}', 'OrderController@test');
+Route::get('/getProductDetails', 'ProductController@getProductDetails');
+Route::get('/getPcategory', 'ProductController@getPcategory');
+
+Route::get('/getSizeByType', 'ProductController@getSizeByType');
+

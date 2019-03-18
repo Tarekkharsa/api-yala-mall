@@ -6,7 +6,8 @@ use App\{
     Scategory,
     offer,
     Mall,
-    Product};
+    Product,
+    Pcategory};
 use Illuminate\Http\Request;
 
 class ProductController extends MyFunction
@@ -107,6 +108,79 @@ class ProductController extends MyFunction
 
         $Products = Product::with('gallery')->get();
         return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $Products] , 200);
+
+    }
+
+
+
+    /*
+        This Function get Product Details v1.0
+        Input:  key  , id
+        Output: get Product by id
+    */
+    public function getProductDetails(Request $request){
+        // check params 
+        if(!$this->requiredParams($request, ['key','id'])){
+            return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
+        }
+
+        $key = $this->checkParam($request->key);
+        if ($key !== self::KEY) {
+            return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
+        }
+
+
+
+        $productDetails = Product::find($request->id);
+        return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $productDetails] , 200);
+
+    }
+
+    
+    /*
+        This Function get Pcategory  v1.0
+        Input:  key  
+        Output: get all Pcategory
+    */
+    public function getPcategory(Request $request){
+        // check params 
+        if(!$this->requiredParams($request, ['key'])){
+            return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
+        }
+
+        $key = $this->checkParam($request->key);
+        if ($key !== self::KEY) {
+            return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
+        }
+
+
+
+        $Pcategory = Pcategory::all();
+        return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $Pcategory] , 200);
+
+    }
+
+
+        /*
+        This Function get Size By Type  v1.0
+        Input:  key  
+        Output: get Type with Size
+    */
+    public function getSizeByType(Request $request){
+        // check params 
+        if(!$this->requiredParams($request, ['key'])){
+            return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
+        }
+
+        $key = $this->checkParam($request->key);
+        if ($key !== self::KEY) {
+            return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
+        }
+
+
+
+        $Pcategory = Pcategory::with('sizeType.size')->get();
+        return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $Pcategory] , 200);
 
     }
 
