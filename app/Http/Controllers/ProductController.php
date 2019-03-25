@@ -16,12 +16,12 @@ class ProductController extends MyFunction
     
     /*
         This Function getProductByCategory v1.0
-        Input:  key  
-        Output: Return all Category  with shop with Product
+        Input:  key  , id
+        Output: Return  Category  with shop with Products
     */
     public function getProductByCategory(Request $request){
         // check params 
-        if(!$this->requiredParams($request, ['key'])){
+        if(!$this->requiredParams($request, ['key','id'])){
             return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
         }
 
@@ -32,7 +32,7 @@ class ProductController extends MyFunction
 
 
 
-        $ProductByCategory = Scategory::with('shops.products')->get();
+        $ProductByCategory = Scategory::with('shops.products')->where('id',$request->id)->get();
         return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $ProductByCategory] , 200);
 
     }
@@ -40,12 +40,12 @@ class ProductController extends MyFunction
 
           /*
         This Function getProductByshop v1.0
-        Input:  key  
+        Input:  key  , id 
         Output: Return all  shop with Product
     */
     public function getProductByshop(Request $request){
         // check params 
-        if(!$this->requiredParams($request, ['key'])){
+        if(!$this->requiredParams($request, ['key','id'])){
             return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
         }
 
@@ -56,7 +56,7 @@ class ProductController extends MyFunction
 
 
 
-        $ProductByshop = Shop::with('products')->get();
+        $ProductByshop = Shop::with('products')->where('id',$request->id)->get();
         return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $ProductByshop] , 200);
 
     }

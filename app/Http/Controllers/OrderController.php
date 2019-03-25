@@ -100,8 +100,8 @@ class OrderController extends MyFunction
 
     /*
         This Function addOrder v1.0
-        Input:  key  , products[product_id , quantity , notes] , token , customer_location_id , order_category_id , order_time , 
-                order_price , coupon , 
+        Input:  key  , products[product_id , quantity , notes] , token , customer_location_id  , order_time , 
+                order_price 
         Output: Add  into database | Return order Object       
     */
     public function addOrder(Request $request){
