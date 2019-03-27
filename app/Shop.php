@@ -23,7 +23,7 @@ class Shop extends Model
     }
 
     public function shopStatus(){
-        return $this->belongsTo(ShopStatus::class);
+        return $this->belongsTo(ShopStatus::class,'shop_status_id');
     }
 
     public function offers(){

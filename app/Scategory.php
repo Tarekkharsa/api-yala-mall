@@ -11,6 +11,6 @@ class Scategory extends Model
     }
 
     public function pCategory(){
-        return $this->hasMany(Pcategory::class);
+        return $this->hasMany(Pcategory::class,'scatogory_id');
     }
 }

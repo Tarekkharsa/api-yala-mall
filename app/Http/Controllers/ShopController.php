@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 use App\Shop;
 use App\{
     Scategory,
-    offer};
+    Offer,
+    Mall};
 use Illuminate\Http\Request;
 
 class ShopController extends MyFunction
@@ -152,6 +153,58 @@ class ShopController extends MyFunction
         return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $categories] , 200);
 
     }
+
+
+      /*
+        This Function getCategoryByMall v1.0
+        Input:  key  
+        Output: Return all Categories by mall
+    */
+    public function getCategoryByMall(Request $request){
+        // check params 
+        if(!$this->requiredParams($request, ['key','mall_id'])){
+            return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
+        }
+
+        $key = $this->checkParam($request->key);
+        if ($key !== self::KEY) {
+            return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
+        }
+
+
+
+        $mall = Mall::with('shop.scategories')->where('id',$request->mall_id)->get();
+        return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $mall] , 200);
+
+    }
+
+    
+
+        /*
+        This Function getShopByMall v1.0
+        Input:  key  , mall_id
+        Output: Return all shops by mall where mall_id == request -> mall_id
+    */
+    public function getShopByMall(Request $request){
+        // check params 
+        if(!$this->requiredParams($request, ['key','mall_id'])){
+            return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
+        }
+
+        $key = $this->checkParam($request->key);
+        if ($key !== self::KEY) {
+            return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
+        }
+
+
+
+        $mall = Mall::with('shop.shopStatus')->where('id',$request->mall_id)->get();
+        return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $mall] , 200);
+
+    }
+
+    
+
 
     
 

@@ -56,7 +56,7 @@ Route::get('/getCustomer', 'CustomerController@getCustomer');
 
 Route::get('/getCategories', 'ShopController@getCategories');
 
-Route::get('/getProductByMAll', 'ProductController@getProductByMAll');
+Route::get('/getProductByMall', 'ProductController@getProductByMall');
 
 
 
@@ -72,3 +72,10 @@ Route::get('/getPcategory', 'ProductController@getPcategory');
 
 Route::get('/getSizeByType', 'ProductController@getSizeByType');
 
+
+Route::get('/getCategoryByMall', 'ShopController@getCategoryByMall');
+
+Route::get('/getPcategoryByScategory', 'ProductController@getPcategoryByScategory');
+
+
+Route::get('/getShopByMall', 'ShopController@getShopByMall');

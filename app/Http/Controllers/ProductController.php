@@ -67,7 +67,7 @@ class ProductController extends MyFunction
         Input:  key  
         Output: Return mall with Product
     */
-    public function getProductByMAll(Request $request){
+    public function getProductByMall(Request $request){
         // check params 
         if(!$this->requiredParams($request, ['key','mall_id'])){
             return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
@@ -185,5 +185,29 @@ class ProductController extends MyFunction
     }
 
 
+
+     
+    /*
+        This Function getPcategoryByScategory  v1.0
+        Input:  key  
+        Output: get all 
+    */
+    public function getPcategoryByScategory(Request $request){
+        // check params 
+        if(!$this->requiredParams($request, ['key','id'])){
+            return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
+        }
+
+        $key = $this->checkParam($request->key);
+        if ($key !== self::KEY) {
+            return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
+        }
+
+
+
+        $Pcategory = scategory::with('pCategory')->where('id',$request->id)->get();
+        return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $Pcategory] , 200);
+
+    }
 
 }

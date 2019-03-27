@@ -73,7 +73,7 @@ class CustomerController extends MyFunction
 
         $customer = Customer::where('token' , $request->token)
         ->with('addresses.location.city')
-        ->with('orders')
+        ->with('orders.bills.billProduct.product')
         ->first();
         if(empty($customer)) {
             return response()->json(['status' => 'error' , 'message' => 'customer not exists' ] , 400);
