@@ -43,7 +43,7 @@ class Shop extends Model
      }
 
      public function mall(){
-        return $this->belongsTo(Mall::class);
+        return $this->belongsTo(Mall::class,'mall_id');
     }
 
  

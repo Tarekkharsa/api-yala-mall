@@ -83,3 +83,5 @@ Route::get('/getShopByMall', 'ShopController@getShopByMall');
 
 
 Route::get('/getFilter', 'FilterController@getFilter');
+
+Route::get('/scategoryByMall', 'MallController@scategoryByMall');

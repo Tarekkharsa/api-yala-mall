@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Mall;
+use App\{Mall,
+    Scategory};
 use Illuminate\Http\Request;
 
 class MallController extends MyFunction
@@ -27,5 +28,31 @@ class MallController extends MyFunction
         return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $malls] , 200);    
     }
 
+
+
+    public function scategoryByMall(Request $request){
+         // check params 
+         if(!$this->requiredParams($request, ['key', 'id'])){
+            return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
+        }
+
+        $key = $this->checkParam($request->key);
+        if ($key !== self::KEY) {
+            return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
+        }
+
+
+        $mall_id = $this->checkParam($request->id);
+       
+        $scategoryByMall = Scategory::whereHas('shopCategory.shop.mall', function ($query) use($mall_id) {
+            $query->where('id',$mall_id);
+        })->get();
+
+
+        
+
+
+        return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $scategoryByMall] , 200);   
+    }
    
 }
