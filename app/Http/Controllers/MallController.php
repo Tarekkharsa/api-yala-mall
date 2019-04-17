@@ -9,7 +9,7 @@ class MallController extends MyFunction
 {
      /*
         This Function getMalls v1.0
-        Input:  key  
+        Input:  key(required)        
         Output: Return all Malls with location
     */
     public function getMalls(Request $request){
@@ -29,7 +29,11 @@ class MallController extends MyFunction
     }
 
 
-
+/*
+        This Function scategoryByMall v1.0
+        Input:  key(required)        , id(required)      
+        Output: Return Scategory By  Mall 
+    */
     public function scategoryByMall(Request $request){
          // check params 
          if(!$this->requiredParams($request, ['key', 'id'])){

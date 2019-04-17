@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Apr 17, 2019 at 09:48 AM
--- Server version: 10.3.14-MariaDB-log
--- PHP Version: 7.2.7
+-- Host: 127.0.0.1
+-- Generation Time: Apr 17, 2019 at 03:38 PM
+-- Server version: 10.1.37-MariaDB
+-- PHP Version: 7.3.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `ma2llyalashop7_yala-mall`
+-- Database: `yala-mall`
 --
 
 -- --------------------------------------------------------
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `bills` (
   `id` int(10) UNSIGNED NOT NULL,
-  `price` int(11) NOT NULL DEFAULT 0,
+  `price` int(11) NOT NULL DEFAULT '0',
   `shop_id` int(10) UNSIGNED NOT NULL,
   `order_id` int(10) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -52,10 +52,7 @@ INSERT INTO `bills` (`id`, `price`, `shop_id`, `order_id`, `created_at`, `update
 (86, 6000, 4, 91, '2019-03-25 11:51:50', '2019-03-25 11:51:50'),
 (87, 10000, 2, 92, '2019-04-15 06:00:22', '2019-04-15 06:00:22'),
 (88, 20000, 2, 93, '2019-04-15 06:00:57', '2019-04-15 06:00:57'),
-(89, 201000, 3, 94, '2019-04-15 06:03:57', '2019-04-15 06:03:57'),
-(90, 201000, 3, 95, '2019-04-16 11:54:37', '2019-04-16 11:54:37'),
-(91, 201000, 3, 96, '2019-04-16 11:57:38', '2019-04-16 11:57:38'),
-(92, 201000, 3, 97, '2019-04-16 13:30:24', '2019-04-16 13:30:24');
+(89, 201000, 3, 94, '2019-04-15 06:03:57', '2019-04-15 06:03:57');
 
 -- --------------------------------------------------------
 
@@ -65,8 +62,8 @@ INSERT INTO `bills` (`id`, `price`, `shop_id`, `order_id`, `created_at`, `update
 
 CREATE TABLE `bill_products` (
   `id` int(10) UNSIGNED NOT NULL,
-  `quantity` int(11) NOT NULL DEFAULT 0,
-  `notes` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `quantity` int(11) NOT NULL DEFAULT '0',
+  `notes` text COLLATE utf8mb4_unicode_ci,
   `sale` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT '1',
   `bill_id` int(10) UNSIGNED NOT NULL,
   `product_id` int(10) UNSIGNED NOT NULL,
@@ -83,13 +80,7 @@ INSERT INTO `bill_products` (`id`, `quantity`, `notes`, `sale`, `bill_id`, `prod
 (2, 2, '51', '1', 88, 15, '2019-04-15 06:00:57', '2019-04-15 06:00:57'),
 (3, 1, '51', '1', 88, 17, '2019-04-15 06:00:57', '2019-04-15 06:00:57'),
 (4, 2, '51', '1', 89, 23, '2019-04-15 06:03:57', '2019-04-15 06:03:57'),
-(5, 1, '51', '1', 89, 24, '2019-04-15 06:03:57', '2019-04-15 06:03:57'),
-(6, 2, '51', '1', 90, 23, '2019-04-16 11:54:37', '2019-04-16 11:54:37'),
-(7, 1, '51', '1', 90, 24, '2019-04-16 11:54:37', '2019-04-16 11:54:37'),
-(8, 2, '51', '1', 91, 23, '2019-04-16 11:57:38', '2019-04-16 11:57:38'),
-(9, 1, '51', '1', 91, 24, '2019-04-16 11:57:38', '2019-04-16 11:57:38'),
-(10, 2, '51', '1', 92, 23, '2019-04-16 13:30:24', '2019-04-16 13:30:24'),
-(11, 1, '51', '1', 92, 24, '2019-04-16 13:30:24', '2019-04-16 13:30:24');
+(5, 1, '51', '1', 89, 24, '2019-04-15 06:03:57', '2019-04-15 06:03:57');
 
 -- --------------------------------------------------------
 
@@ -144,7 +135,7 @@ CREATE TABLE `customers` (
   `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `verification_code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `verification_request_time` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `blocked` tinyint(4) NOT NULL DEFAULT 0,
+  `blocked` tinyint(4) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -156,8 +147,7 @@ CREATE TABLE `customers` (
 INSERT INTO `customers` (`id`, `phone`, `token`, `verification_code`, `verification_request_time`, `blocked`, `created_at`, `updated_at`) VALUES
 (1, '0935639194', 'qnuamrgyvtnorivcoarvuygdtykmifja', '5652', '2019-03-13 12:42:33', 0, '2019-03-13 10:42:33', '2019-03-13 10:42:33'),
 (2, '0935639195', 'iivrlrmmytzjclvbxgvoycdwgerxyubq', '1019', '2019-03-13 12:43:09', 0, '2019-03-13 10:43:09', '2019-03-13 10:43:09'),
-(3, '0935639198', 'egghsfglmsrujundrtwfwignbtytxgtq', '6745', '2019-03-13 12:56:16', 0, '2019-03-13 10:56:16', '2019-04-11 08:21:22'),
-(4, '0944901335', 'trteuibcdtsokoqzbdigzissqdbplieo', '8178', '2019-04-16 13:01:10', 0, '2019-04-16 11:01:10', '2019-04-16 11:01:10');
+(3, '0935639198', 'egghsfglmsrujundrtwfwignbtytxgtq', '6745', '2019-03-13 12:56:16', 0, '2019-03-13 10:56:16', '2019-04-11 08:21:22');
 
 -- --------------------------------------------------------
 
@@ -181,9 +171,7 @@ CREATE TABLE `customer_locations` (
 INSERT INTO `customer_locations` (`id`, `address`, `customer_id`, `location_id`, `created_at`, `updated_at`) VALUES
 (1, 'مدينه الجلاء', 1, 1, '2019-03-13 13:49:40', '2019-03-13 13:49:40'),
 (2, 'مدينه الجلاء', 1, 1, '2019-03-14 08:33:17', '2019-03-14 08:33:17'),
-(3, 'مدينه الجلاء', 1, 1, '2019-04-11 09:11:47', '2019-04-11 09:11:47'),
-(4, 'sdfsd', 4, 1, '2019-04-16 11:09:20', '2019-04-16 11:09:20'),
-(5, 'sdfsd', 4, 1, '2019-04-16 11:09:21', '2019-04-16 11:09:21');
+(3, 'مدينه الجلاء', 1, 1, '2019-04-11 09:11:47', '2019-04-11 09:11:47');
 
 -- --------------------------------------------------------
 
@@ -197,14 +185,14 @@ CREATE TABLE `data_rows` (
   `field` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `display_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `required` tinyint(1) NOT NULL DEFAULT 0,
-  `browse` tinyint(1) NOT NULL DEFAULT 1,
-  `read` tinyint(1) NOT NULL DEFAULT 1,
-  `edit` tinyint(1) NOT NULL DEFAULT 1,
-  `add` tinyint(1) NOT NULL DEFAULT 1,
-  `delete` tinyint(1) NOT NULL DEFAULT 1,
-  `details` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `order` int(11) NOT NULL DEFAULT 1
+  `required` tinyint(1) NOT NULL DEFAULT '0',
+  `browse` tinyint(1) NOT NULL DEFAULT '1',
+  `read` tinyint(1) NOT NULL DEFAULT '1',
+  `edit` tinyint(1) NOT NULL DEFAULT '1',
+  `add` tinyint(1) NOT NULL DEFAULT '1',
+  `delete` tinyint(1) NOT NULL DEFAULT '1',
+  `details` text COLLATE utf8mb4_unicode_ci,
+  `order` int(11) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -224,9 +212,9 @@ CREATE TABLE `data_types` (
   `policy_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `controller` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `generate_permissions` tinyint(1) NOT NULL DEFAULT 0,
-  `server_side` tinyint(4) NOT NULL DEFAULT 0,
-  `details` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `generate_permissions` tinyint(1) NOT NULL DEFAULT '0',
+  `server_side` tinyint(4) NOT NULL DEFAULT '0',
+  `details` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -315,8 +303,8 @@ CREATE TABLE `malls` (
 --
 
 INSERT INTO `malls` (`id`, `name`, `logo`, `address`, `phone`, `website`, `location_id`, `created_at`, `updated_at`) VALUES
-(1, 'سيتي مول', '1.jpg', 'المزه', '', '', 1, NULL, NULL),
-(3, 'مول قاسيون', '2.jpg', 'اوتستراد حاميش', '0935639194', '', 2, NULL, NULL);
+(1, 'سيتي مول', NULL, 'المزه', '', '', 1, NULL, NULL),
+(3, 'مول قاسيون', NULL, 'اوتستراد حاميش', '0935639194', '', 2, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -350,7 +338,7 @@ CREATE TABLE `menu_items` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `route` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `parameters` text COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `parameters` text COLLATE utf8mb4_unicode_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -430,9 +418,9 @@ CREATE TABLE `offers` (
   `id` int(10) UNSIGNED NOT NULL,
   `title` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `image` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `price` int(11) NOT NULL DEFAULT 0,
-  `active` tinyint(4) NOT NULL DEFAULT 0,
+  `description` text COLLATE utf8mb4_unicode_ci,
+  `price` int(11) NOT NULL DEFAULT '0',
+  `active` tinyint(4) NOT NULL DEFAULT '0',
   `shop_id` int(10) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -453,8 +441,8 @@ INSERT INTO `offers` (`id`, `title`, `image`, `description`, `price`, `active`, 
 
 CREATE TABLE `orders` (
   `id` int(10) UNSIGNED NOT NULL,
-  `price` int(11) NOT NULL DEFAULT 0,
-  `delivery_cost` int(11) NOT NULL DEFAULT 0,
+  `price` int(11) NOT NULL DEFAULT '0',
+  `delivery_cost` int(11) NOT NULL DEFAULT '0',
   `order_time` datetime DEFAULT NULL,
   `delivery_time` datetime DEFAULT NULL,
   `order_status_id` int(10) UNSIGNED NOT NULL,
@@ -476,10 +464,7 @@ INSERT INTO `orders` (`id`, `price`, `delivery_cost`, `order_time`, `delivery_ti
 (91, 18000, 0, '2019-03-25 13:51:50', NULL, 1, 1, 1, NULL, '2019-03-25 11:51:50', '2019-03-25 11:51:50'),
 (92, 10000, 0, '2019-04-15 09:00:22', NULL, 1, 1, 1, NULL, '2019-04-15 06:00:22', '2019-04-15 06:00:22'),
 (93, 20000, 0, '2019-04-15 09:00:57', NULL, 1, 1, 1, NULL, '2019-04-15 06:00:57', '2019-04-15 06:00:57'),
-(94, 201000, 0, '2019-04-15 09:03:57', NULL, 1, 1, 1, NULL, '2019-04-15 06:03:57', '2019-04-15 06:03:57'),
-(95, 201000, 0, '2019-04-16 13:54:37', NULL, 1, 1, 1, NULL, '2019-04-16 11:54:37', '2019-04-16 11:54:37'),
-(96, 201000, 0, '2019-04-16 13:54:37', NULL, 1, 1, 1, NULL, '2019-04-16 11:57:38', '2019-04-16 11:57:38'),
-(97, 201000, 0, '2019-04-16 15:30:24', NULL, 1, 1, 1, NULL, '2019-04-16 13:30:24', '2019-04-16 13:30:24');
+(94, 201000, 0, '2019-04-15 09:03:57', NULL, 1, 1, 1, NULL, '2019-04-15 06:03:57', '2019-04-15 06:03:57');
 
 -- --------------------------------------------------------
 
@@ -525,8 +510,7 @@ CREATE TABLE `owners` (
 INSERT INTO `owners` (`id`, `full_name`, `username`, `password`, `phone`, `created_at`, `updated_at`) VALUES
 (1, 'محمد التل ', 'التل', '1234', '0936528647', NULL, NULL),
 (2, 'فراس الشاهر', 'فراس', '1234', '0930301103', NULL, NULL),
-(3, 'محمد شحود ', 'محمد', '1234', '0930301101', NULL, NULL),
-(4, 'عماد الدين', 'عماد', '1234', '0935635985', NULL, NULL);
+(3, 'محمد شحود ', 'محمد', '1234', '0930301101', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -598,10 +582,10 @@ CREATE TABLE `permission_role` (
 CREATE TABLE `products` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `available` tinyint(4) NOT NULL DEFAULT 1,
-  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `price` int(11) NOT NULL DEFAULT 0,
-  `discount` float DEFAULT 1,
+  `available` tinyint(4) NOT NULL DEFAULT '1',
+  `description` text COLLATE utf8mb4_unicode_ci,
+  `price` int(11) NOT NULL DEFAULT '0',
+  `discount` float DEFAULT '1',
   `shop_id` int(10) UNSIGNED NOT NULL,
   `size_pcategory_id` int(10) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -620,7 +604,7 @@ INSERT INTO `products` (`id`, `name`, `available`, `description`, `price`, `disc
 (19, 'بنطلوون قماش ', 1, 'بنطلوون قماش بنطلوون قماش بنطلوون قماش بنطلوون قماش ', 4000, 1, 2, 6, NULL, NULL),
 (20, 'بنطلوون تركي ', 1, 'بنطلوون تركي بنطلوون تركي بنطلوون تركي ', 6000, 1, 2, 7, NULL, NULL),
 (21, 'بنطلوون اسباني ', 1, 'بنطلوون اسباني بنطلوون اسباني بنطلوون اسباني بنطلوون اسباني ', 5000, 1, 2, 8, NULL, NULL),
-(22, 'شاشه سمارت', 1, 'شاشه سمارتشاشه سمارتشاشه سمارتشاشه سمارتشاشه سمارت', 200000, 1, 3, 11, NULL, NULL),
+(22, 'شاشه سمارت', 1, 'شاشه سمارتشاشه سمارتشاشه سمارتشاشه سمارتشاشه سمارت', 200000, 1, 3, 10, NULL, NULL),
 (23, 'شاشه lcd', 1, 'شاشه lcdشاشه  lcdشاشه lcdشاشه lcd', 100000, 1, 3, 10, NULL, NULL),
 (24, 'شاشه ابيض واسود', 1, 'شاشه ابيض واسودشاشه ابيض واسودشاشه ابيض واسود', 1000, 1, 3, 14, NULL, NULL);
 
@@ -671,10 +655,10 @@ CREATE TABLE `settings` (
   `id` int(10) UNSIGNED NOT NULL,
   `key` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `display_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `value` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `details` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `value` text COLLATE utf8mb4_unicode_ci,
+  `details` text COLLATE utf8mb4_unicode_ci,
   `type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `order` int(11) NOT NULL DEFAULT 1,
+  `order` int(11) NOT NULL DEFAULT '1',
   `group` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -692,8 +676,8 @@ CREATE TABLE `shops` (
   `open_time` datetime DEFAULT NULL,
   `close_time` datetime DEFAULT NULL,
   `shop_status_id` int(10) UNSIGNED NOT NULL,
-  `sale` int(11) NOT NULL DEFAULT 1,
-  `min_order_cost` int(11) NOT NULL DEFAULT 0,
+  `sale` int(11) NOT NULL DEFAULT '1',
+  `min_order_cost` int(11) NOT NULL DEFAULT '0',
   `mall_id` int(10) UNSIGNED NOT NULL,
   `owner_id` int(10) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -705,10 +689,9 @@ CREATE TABLE `shops` (
 --
 
 INSERT INTO `shops` (`id`, `name`, `logo`, `flour`, `open_time`, `close_time`, `shop_status_id`, `sale`, `min_order_cost`, `mall_id`, `owner_id`, `created_at`, `updated_at`) VALUES
-(2, 'محل التل', 's1.jpg', '3', '2019-03-13 01:00:00', '2019-03-13 15:00:00', 2, 1, 1000, 1, 1, NULL, NULL),
-(3, 'محل شحود', 's2.jpg', '5', '2019-03-18 01:00:00', '2019-03-18 10:00:00', 2, 1, 0, 3, 3, NULL, NULL),
-(4, 'محل فراس', 's3.jpg', '5', '2019-03-18 01:00:00', '2019-03-18 14:00:00', 2, 1, 2000, 1, 2, NULL, NULL),
-(5, 'محل عماد الدين', 's4.jpg', '5', '2019-04-15 01:00:00', '2019-04-15 08:00:00', 2, 1, 200000, 1, 4, NULL, NULL);
+(2, 'محل التل', NULL, '3', '2019-03-13 01:00:00', '2019-03-13 15:00:00', 2, 1, 1000, 1, 1, NULL, NULL),
+(3, 'محل شحود', NULL, '5', '2019-03-18 01:00:00', '2019-03-18 10:00:00', 2, 1, 0, 3, 3, NULL, NULL),
+(4, 'محل فراس', NULL, '5', '2019-03-18 01:00:00', '2019-03-18 14:00:00', 2, 1, 2000, 1, 2, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -717,6 +700,7 @@ INSERT INTO `shops` (`id`, `name`, `logo`, `flour`, `open_time`, `close_time`, `
 --
 
 CREATE TABLE `shop_categories` (
+  `id` int(11) NOT NULL,
   `shop_id` int(10) UNSIGNED NOT NULL,
   `scategory_id` int(10) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -727,9 +711,9 @@ CREATE TABLE `shop_categories` (
 -- Dumping data for table `shop_categories`
 --
 
-INSERT INTO `shop_categories` (`shop_id`, `scategory_id`, `created_at`, `updated_at`) VALUES
-(2, 1, NULL, NULL),
-(3, 3, NULL, NULL);
+INSERT INTO `shop_categories` (`id`, `shop_id`, `scategory_id`, `created_at`, `updated_at`) VALUES
+(1, 2, 2, NULL, NULL),
+(2, 3, 3, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -875,7 +859,7 @@ CREATE TABLE `users` (
   `avatar` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT 'users/default.png',
   `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `settings` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `settings` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1102,6 +1086,7 @@ ALTER TABLE `shops`
 -- Indexes for table `shop_categories`
 --
 ALTER TABLE `shop_categories`
+  ADD PRIMARY KEY (`id`),
   ADD KEY `shop_categories_shop_id_foreign` (`shop_id`),
   ADD KEY `shop_categories_scategory_id_foreign` (`scategory_id`);
 
@@ -1170,13 +1155,13 @@ ALTER TABLE `user_roles`
 -- AUTO_INCREMENT for table `bills`
 --
 ALTER TABLE `bills`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 
 --
 -- AUTO_INCREMENT for table `bill_products`
 --
 ALTER TABLE `bill_products`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `cars`
@@ -1194,13 +1179,13 @@ ALTER TABLE `cities`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `customer_locations`
 --
 ALTER TABLE `customer_locations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `data_rows`
@@ -1266,7 +1251,7 @@ ALTER TABLE `offers`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
 
 --
 -- AUTO_INCREMENT for table `order_statuses`
@@ -1278,7 +1263,7 @@ ALTER TABLE `order_statuses`
 -- AUTO_INCREMENT for table `owners`
 --
 ALTER TABLE `owners`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `pcategories`
@@ -1320,7 +1305,13 @@ ALTER TABLE `settings`
 -- AUTO_INCREMENT for table `shops`
 --
 ALTER TABLE `shops`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `shop_categories`
+--
+ALTER TABLE `shop_categories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `shop_statuses`
