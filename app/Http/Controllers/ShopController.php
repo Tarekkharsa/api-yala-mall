@@ -13,7 +13,7 @@ class ShopController extends MyFunction
  
    /*
         This Function getShops v1.0
-        Input:  key 
+        Input:  key(required) 
         Output: Return all Shop
     */
     public function getShops(Request $request){
@@ -41,13 +41,13 @@ class ShopController extends MyFunction
 
        /*
         This Function getShop v1.0
-        Input:  key , id
-        Output: Return all info of shop
+        Input:  key(required)  , id(required) 
+        Output: Return shop with owner with(shopStatus,mall,offers,orders,scategories,products)
     */
     public function getShop(Request $request){
 
         // check params 
-        if(!$this->requiredParams($request, ['key'])){
+        if(!$this->requiredParams($request, ['key', 'id'])){
             return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
         }
 
@@ -81,9 +81,9 @@ class ShopController extends MyFunction
 
 
     
-    /*
+  /*
         This Function getShopCategories v1.0
-        Input:  key  
+        Input:  key(required)   , shop_id(required)   
         Output: Return all shop categories with shop object only
     */
     public function getShopCategories(Request $request){
@@ -97,16 +97,19 @@ class ShopController extends MyFunction
             return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
         }
 
+        $shop_id = $this->checkParam($request->shop_id);
 
-
-        $shop_categories = Scategory::with('shops')->get();
+        $shop_categories = Scategory::with('shopCategory.shop')->whereHas('shopCategory', function ($query) use($shop_id) {
+                                                    $query->where('shop_id',$shop_id);
+                                                })->get();
         return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $shop_categories] , 200);
 
     }
 
+
         /*
         This Function getOffers v1.0
-        Input:  key  
+        Input:  key(required)    
         Output: Return all shop offers with shop 
     */
     public function getOffers(Request $request){
@@ -133,7 +136,7 @@ class ShopController extends MyFunction
 
      /*
         This Function getCategories v1.0
-        Input:  key  
+        Input:  key(required)      
         Output: Return all Categories
     */
     public function getCategories(Request $request){
@@ -157,7 +160,7 @@ class ShopController extends MyFunction
 
       /*
         This Function getCategoryByMall v1.0
-        Input:  key  
+        Input:  key(required)      
         Output: Return all Categories by mall
     */
     public function getCategoryByMall(Request $request){
@@ -182,7 +185,7 @@ class ShopController extends MyFunction
 
         /*
         This Function getShopByMall v1.0
-        Input:  key  , mall_id
+        Input:  key(required)  , mall_id(required)
         Output: Return all shops by mall where mall_id == request -> mall_id
     */
     public function getShopByMall(Request $request){

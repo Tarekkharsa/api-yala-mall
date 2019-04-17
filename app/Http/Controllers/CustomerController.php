@@ -13,10 +13,10 @@ use App\{
 class CustomerController extends MyFunction
 {
         /*
-        This Function addCustomerLocation v1.0
-        Input:  key , token , location_id , address
-        Output: Add Review into database | Return Address Object
-    */
+            This Function addCustomerLocation v1.0
+            Input:  key(required) , token(required) , location_id(required) , address
+            Output: Add Review into database | Return customer_locations Object
+        */
     public function addCustomerLocation(Request $request){
         // check params 
         
@@ -54,10 +54,10 @@ class CustomerController extends MyFunction
 
 
        /*
-        This Function getCustomer v1.0
-        Input:  key (required)  , token (required)
-        Output: return Customer with ( coupons , orders , addresses )
-    */
+            This Function getCustomer v1.0
+            Input:  key (required)  , token (required)
+            Output: return Customer with (  orders , addresses )
+         */
     public function getCustomer(Request $request){
 
         // check params 

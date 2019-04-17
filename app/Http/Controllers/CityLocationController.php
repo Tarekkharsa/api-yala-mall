@@ -7,10 +7,7 @@ use App\City;
 class CityLocationController extends MyFunction
 {
     
-
-
-
-     /*
+      /*
         This Function getCities v1.0
         Input:  key  
         Output: Return all cities with locations

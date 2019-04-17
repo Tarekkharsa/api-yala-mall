@@ -7,7 +7,8 @@ use App\{
     offer,
     Mall,
     Product,
-    Pcategory};
+    Pcategory,
+    Size};
 use Illuminate\Http\Request;
 
 class ProductController extends MyFunction
@@ -16,8 +17,8 @@ class ProductController extends MyFunction
     
     /*
         This Function getProductByCategory v1.0
-        Input:  key  , id
-        Output: Return  Category  with shop with Products
+        Input:  key(required)     , id(required)   
+        Output: Return  sCategory  with shop with Products
     */
     public function getProductByCategory(Request $request){
         // check params 
@@ -38,10 +39,10 @@ class ProductController extends MyFunction
     }
 
 
-          /*
+     /*
         This Function getProductByshop v1.0
-        Input:  key  , id 
-        Output: Return all  shop with Product
+        Input:  key(required) , id(required)      
+        Output: Return   shop with Product where id = request->>id
     */
     public function getProductByshop(Request $request){
         // check params 
@@ -62,10 +63,10 @@ class ProductController extends MyFunction
     }
 
 
-       /*
+     /*
         This Function getProductByMAll v1.0
-        Input:  key  
-        Output: Return mall with Product
+        Input:  key(required)  ,mall_id(required)
+        Output: Return mall with shop with Product
     */
     public function getProductByMall(Request $request){
         // check params 
@@ -88,9 +89,9 @@ class ProductController extends MyFunction
 
 
 
-         /*
+     /*
         This Function getProducts v1.0
-        Input:  key  
+        Input:  key(required)  
         Output: Return all Products with gallery
     */
     public function getProducts(Request $request){
@@ -115,7 +116,7 @@ class ProductController extends MyFunction
 
     /*
         This Function get Product Details v1.0
-        Input:  key  , id
+        Input:  key(required)   , id(required)
         Output: get Product by id
     */
     public function getProductDetails(Request $request){
@@ -162,13 +163,13 @@ class ProductController extends MyFunction
 
 
         /*
-        This Function get Size By Type  v1.0
-        Input:  key  
-        Output: get Type with Size
+        This Function getSizeByPcategory  v1.0
+        Input:  key(required)  , id(required)
+        Output: get  Size by pcategory | return pcatecory with sizes 
     */
-    public function getSizeByType(Request $request){
+    public function getSizeByPcategory(Request $request){
         // check params 
-        if(!$this->requiredParams($request, ['key'])){
+        if(!$this->requiredParams($request, ['key','id'])){
             return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
         }
 
@@ -178,19 +179,22 @@ class ProductController extends MyFunction
         }
 
 
-
-        $Pcategory = Pcategory::with('sizeType.size')->get();
-        return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $Pcategory] , 200);
+        $pcategory_id=$this->checkParam($request->id);
+        $Pcategory = Size::whereHas('pcategory_size', function ($query) use($pcategory_id) {
+                                                    $query->where('pcategory_id',$pcategory_id);
+                                                })->get();
+        return response()->json(['status' => 'success' , 'message' => 'OK111', 'data' => $Pcategory] , 200);
 
     }
 
 
 
      
+     
     /*
         This Function getPcategoryByScategory  v1.0
-        Input:  key  
-        Output: get all 
+        Input: id(required), key(required)  
+        Output: get all pcategory by scategory
     */
     public function getPcategoryByScategory(Request $request){
         // check params 

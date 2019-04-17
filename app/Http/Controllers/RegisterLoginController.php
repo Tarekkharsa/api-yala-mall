@@ -34,7 +34,10 @@ class RegisterLoginController extends MyFunction
         $customer  = Customer::where('phone' , $this->checkParam($request->phone))->first();
         if(!empty($customer))
         {
-            return response()->json(['status' => 'success' , 'message' => 'customer exist'  , 'data' => ''] , 200);
+        
+            $customer->verification_code = rand ( 1000 , 9999 );
+            $customer->save();
+            return response()->json(['status' => 'success' , 'message' => 'add customer suuccessfully'  , 'data' => $customer] , 200);
         } else {
             $customer = new Customer;
             $customer->phone             = $this->checkParam($request->phone);
@@ -79,11 +82,11 @@ class RegisterLoginController extends MyFunction
             {
                 return response()->json(['status' => 'success' , 'message' => 'OK'  , 'data' => $customer] , 200);
             } else{
-                return response()->json(['status' => 'error' , 'message' => 'invaild verification code'] , 400);
+                return response()->json(['status' => 'error' , 'message' => 'invaild verification code'] , 200);
             }
             
         } else{
-            return response()->json(['status' => 'error' , 'message' => 'invalid data'] , 400);
+            return response()->json(['status' => 'error' , 'message' => 'invalid data'] , 200);
         }
     } 
 

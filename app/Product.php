@@ -21,10 +21,8 @@ class Product extends Model
     public function tagProduct(){
         return $this->hasMany(TagProduct::class);
     }
-    public function pCategory(){
-        return $this->belongsTo(Pcategory::class);
+    public function pCategory_size(){
+        return $this->belongsTo(SizeType::class,'size_pcategory_id');
      }
-     public function products(){
-        return $this->hasMany(Product::class);
-    }
+   
 }

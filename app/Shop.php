@@ -12,7 +12,10 @@ class Shop extends Model
     
 
     public function sCategory(){
-        return $this->belongsToMany('App\Scategory' , 'shop_categories' , 'scategory_id' , 'shop_id');
+        return $this->belongsToMany('App\Scategory' , 'shop_categories' , 'scategory_id');
+    }
+    public function shopCategory(){
+        return $this->hasMany(ShopCategory::class);
     }
     
     public function products(){

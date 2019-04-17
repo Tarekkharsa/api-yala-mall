@@ -13,4 +13,8 @@ class Scategory extends Model
     public function pCategory(){
         return $this->hasMany(Pcategory::class,'scatogory_id');
     }
+    public function shopCategory(){
+        return $this->hasMany(ShopCategory::class);
+    }
+    
 }

@@ -19,8 +19,8 @@ class OrderController extends MyFunction
 {
      /*
         This Function getShopOrders v1.0
-        Input:  key  
-        Output: Return 
+        Input:  key(required)   
+        Output: Return shop with orders with order status with
     */
     public function getShopOrders(Request $request){
         // check params 
@@ -38,10 +38,10 @@ class OrderController extends MyFunction
         return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $orders] , 200);    
     }
 
-          /*
-        This Function updateOrderStatus v1.0
-        Input:  key , id, status_id 
-        Output: update Order By status
+        /*
+            This Function updateOrderStatus v1.0
+            Input:  key(required) , id, status_id 
+            Output: update Order  status
         */
         public function updateOrderStatus(Request $request){
             if(!$this->requiredParams($request, ['key'])){
@@ -49,10 +49,7 @@ class OrderController extends MyFunction
             }
                 $order= Order::find($request->id);
                 $order->order_status_id         =        $request->status_id;
-            // if(!empty($request->driver_id)){
-            //     $order->driver_id=$request->driver_id;
-    
-            // }
+      
     
                $order->save();
             return response()->json(['status' => 'success' , 'message' => 'OK'  , 'data' => $order] , 200);
@@ -66,8 +63,8 @@ class OrderController extends MyFunction
 
      /*
         This Function getCustomerOrders v1.0
-        Input:  key  
-        Output: Return  CustomerOrders
+        Input:  key(required)  , token(required)
+        Output: Return  Customer with Orders
     */
     public function getCustomerOrders(Request $request){
         // check params 

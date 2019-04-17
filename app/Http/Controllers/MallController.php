@@ -9,7 +9,7 @@ class MallController extends MyFunction
      /*
         This Function getMalls v1.0
         Input:  key  
-        Output: Return all Malls 
+        Output: Return all Malls with location
     */
     public function getMalls(Request $request){
         // check params 
