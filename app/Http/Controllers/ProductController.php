@@ -31,7 +31,7 @@ class ProductController extends MyFunction
             return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
         }
         $id = $this->checkParam($request->id);
-        $ProductByCategory = Product::whereHas('shop.shopCategory.scatecory', function ($query) use($id) {
+        $ProductByCategory = Product::with('gallery')->whereHas('shop.shopCategory.scatecory', function ($query) use($id) {
             $query->where('id',$id);
         })->get();
 
@@ -60,7 +60,7 @@ class ProductController extends MyFunction
       
 
 
-        $ProductByshop = Product::where('shop_id',$request->id)->get();
+        $ProductByshop = Product::with('gallery')->where('shop_id',$request->id)->get();
         return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $ProductByshop] , 200);
 
     }
@@ -83,7 +83,7 @@ class ProductController extends MyFunction
         }
 
         $mall_id = $this->checkParam($request->mall_id);
-         $ProductByMAll = Product::whereHas('shop.mall', function ($query) use($mall_id) {
+         $ProductByMAll = Product::with('gallery')->whereHas('shop.mall', function ($query) use($mall_id) {
             $query->where('id',$mall_id);
         })->get();
 
@@ -138,7 +138,7 @@ class ProductController extends MyFunction
 
 
 
-        $productDetails = Product::find($request->id);
+        $productDetails = Product::with('gallery')->where('id',$request->id)->get();
         return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $productDetails] , 200);
 
     }
