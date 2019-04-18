@@ -48,7 +48,7 @@ class FilterController extends MyFunction
 
         if ($scategory_id != 0 && $pcategory_id == 0  && $size  == 0){
 
-            $ProductByCategory = Product::whereHas('shop.shopCategory', function ($query) use($scategory_id) {
+            $ProductByCategory = Product::with('gallery')->whereHas('shop.shopCategory', function ($query) use($scategory_id) {
                                                     $query->where('scategory_id',$scategory_id);
                                                 })->get();
             return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $ProductByCategory] , 200);
@@ -57,14 +57,14 @@ class FilterController extends MyFunction
         } else if ($pcategory_id != 0  && $size  == 0 ){
             
          
-            $ProductByCategory = Product::whereHas('pCategory_size', function ($query) use($pcategory_id) {
+            $ProductByCategory = Product::with('gallery')->whereHas('pCategory_size', function ($query) use($pcategory_id) {
                 $query->where('pcategory_id',$pcategory_id);
             })->get();                                                
             return response()->json(['status' => 'success' , 'message' => 'OKff', 'data' => $ProductByCategory] , 200);
 
         } else if ( $pcategory_id != 0  && $size  != 0 ){
 
-           $ProductByCategory = Product::whereHas('pCategory_size', function ($query) use($pcategory_id,$size) {
+           $ProductByCategory = Product::with('gallery')->whereHas('pCategory_size', function ($query) use($pcategory_id,$size) {
                                                 $query->where('pcategory_id',$pcategory_id)
                                                     ->where('size_id',$size);
                                             })->get();

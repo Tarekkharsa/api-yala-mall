@@ -220,4 +220,30 @@ class ProductController extends MyFunction
 
     }
 
+
+
+
+        /*
+        This Function search  v1.0
+        Input: name(required), key(required)  
+        Output: search in product by name
+    */
+    public function search(Request $request){
+        // check params 
+        if(!$this->requiredParams($request, ['key','name'])){
+            return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
+        }
+
+        $key = $this->checkParam($request->key);
+        if ($key !== self::KEY) {
+            return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
+        }
+
+
+
+        $Pcategory = Product::with('gallery')->where('name','like','%'.$request->name.'%')->get();
+        return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $Pcategory] , 200);
+
+    }
+
 }
