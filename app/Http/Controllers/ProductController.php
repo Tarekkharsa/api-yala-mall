@@ -30,10 +30,12 @@ class ProductController extends MyFunction
         if ($key !== self::KEY) {
             return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
         }
+        $id = $this->checkParam($request->id);
+        $ProductByCategory = Product::whereHas('shop.shopCategory.scatecory', function ($query) use($id) {
+            $query->where('id',$id);
+        })->get();
 
-
-
-        $ProductByCategory = Scategory::with('shops.products')->where('id',$request->id)->get();
+        // $ProductByCategory = Scategory::with('shops.products')->where('id',$request->id)->get();
         return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $ProductByCategory] , 200);
 
     }
@@ -55,9 +57,10 @@ class ProductController extends MyFunction
             return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
         }
 
+      
 
 
-        $ProductByshop = Shop::with('products')->where('id',$request->id)->get();
+        $ProductByshop = Product::where('shop_id',$request->id)->get();
         return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $ProductByshop] , 200);
 
     }
@@ -79,9 +82,12 @@ class ProductController extends MyFunction
             return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
         }
 
+        $mall_id = $this->checkParam($request->mall_id);
+         $ProductByMAll = Product::whereHas('shop.mall', function ($query) use($mall_id) {
+            $query->where('id',$mall_id);
+        })->get();
 
-
-        $ProductByMAll = Mall::with('Shop.products')->where('id', $request->mall_id)->get();
+        // $ProductByMAll = Mall::with('Shop.products')->where('id', $request->mall_id)->get();
         return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $ProductByMAll] , 200);
 
     }
