@@ -209,6 +209,31 @@ class ShopController extends MyFunction
     
 
 
+
+        /*
+        This Function getShopById v1.0
+        Input:  key(required)        , id(required)      
+        Output: Return shop(object) 
+    */
+    public function getShopById(Request $request){
+        // check params 
+        if(!$this->requiredParams($request, ['key', 'shop_id'])){
+           return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
+       }
+
+       $key = $this->checkParam($request->key);
+       if ($key !== self::KEY) {
+           return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
+       }
+
+
+       $shop_id = $this->checkParam($request->shop_id);
+      
+      $shopInfo = Shop::where('id',$shop_id)->get();
+      
+       return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $shopInfo] , 200);   
+   }
+
     
 
     

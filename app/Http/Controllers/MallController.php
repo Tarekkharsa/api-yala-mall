@@ -58,5 +58,30 @@ class MallController extends MyFunction
 
         return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $scategoryByMall] , 200);   
     }
+
+
+    /*
+        This Function getMallById v1.0
+        Input:  key(required)        , id(required)      
+        Output: Return mall(object) 
+    */
+    public function getMallById(Request $request){
+        // check params 
+        if(!$this->requiredParams($request, ['key', 'mall_id'])){
+           return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
+       }
+
+       $key = $this->checkParam($request->key);
+       if ($key !== self::KEY) {
+           return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
+       }
+
+
+       $mall_id = $this->checkParam($request->mall_id);
+      
+      $mallInfo = Mall::where('id',$mall_id)->get();
+      
+       return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $mallInfo] , 200);   
+   }
    
 }

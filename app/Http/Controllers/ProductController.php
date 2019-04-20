@@ -246,4 +246,78 @@ class ProductController extends MyFunction
 
     }
 
+            /*
+        This Function searchByShop  v1.0
+        Input: name(required), key(required)  , shop_id(required) 
+        Output: search  product in shop by name
+    */
+    public function searchByShop(Request $request){
+        // check params 
+        if(!$this->requiredParams($request, ['key','name','shop_id'])){
+            return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
+        }
+
+        $key = $this->checkParam($request->key);
+        if ($key !== self::KEY) {
+            return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
+        }
+
+
+
+        $Pcategory = Product::with('gallery')->where('name','like','%'.$request->name.'%')->where('shop_id',$request->shop_id)->get();
+        return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $Pcategory] , 200);
+
+    }
+
+
+               /*
+        This Function searchByMall  v1.0
+        Input: name(required), key(required)  , mall_id(required) 
+        Output: search  product in mall by name
+    */
+    public function searchByMall(Request $request){
+        // check params 
+        if(!$this->requiredParams($request, ['key','name','mall_id'])){
+            return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
+        }
+
+        $key = $this->checkParam($request->key);
+        if ($key !== self::KEY) {
+            return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
+        }
+
+
+        $mall_id = $this->checkParam($request->mall_id);
+
+        $Pcategory = Product::with('gallery')->where('name','like','%'.$request->name.'%')->whereHas('shop.mall', function ($query) use($mall_id) {
+            $query->where('id',$mall_id);
+        })->get();
+        return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $Pcategory] , 200);
+
+    }
+
+    
+    /*
+        This Function getScategoryById v1.0
+        Input:  key(required)  , id(required)      
+        Output: Return Scategory(object) 
+    */
+    public function getScategoryById(Request $request){
+        // check params 
+        if(!$this->requiredParams($request, ['key', 'cat_id'])){
+           return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
+       }
+
+       $key = $this->checkParam($request->key);
+       if ($key !== self::KEY) {
+           return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
+       }
+
+
+       $cat_id = $this->checkParam($request->cat_id);
+      
+      $catInfo = Scategory::where('id',$cat_id)->get();
+      
+       return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $catInfo] , 200);   
+   }
 }

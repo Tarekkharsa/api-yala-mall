@@ -89,3 +89,17 @@ Route::get('/scategoryByMall', 'MallController@scategoryByMall');
 
 
 Route::get('/search', 'ProductController@search');
+
+Route::get('/searchByShop', 'ProductController@searchByShop');
+
+
+Route::get('/searchByMall', 'ProductController@searchByMall');
+
+
+Route::get('/getMallById', 'MallController@getMallById');
+
+Route::get('/getShopById', 'ShopController@getShopById');
+
+
+
+Route::get('/getScategoryById', 'ProductController@getScategoryById');
