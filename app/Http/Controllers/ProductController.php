@@ -296,10 +296,36 @@ class ProductController extends MyFunction
 
     }
 
+                 /*
+        This Function searchByScategory  v1.0
+        Input: name(required), key(required)  , cat_id(required) 
+        Output: search  product in Scategory by name
+    */
+    public function searchByScategory(Request $request){
+        // check params 
+        if(!$this->requiredParams($request, ['key','name','cat_id'])){
+            return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
+        }
+
+        $key = $this->checkParam($request->key);
+        if ($key !== self::KEY) {
+            return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
+        }
+
+
+        $cat_id = $this->checkParam($request->cat_id);
+
+        $scategory = Product::with('gallery')->where('name','like','%'.$request->name.'%')->whereHas('shop.shopCategory.scatecory', function ($query) use($cat_id) {
+            $query->where('id',$cat_id);
+        })->get();
+        return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $scategory] , 200);
+
+    }
+
     
     /*
         This Function getScategoryById v1.0
-        Input:  key(required)  , id(required)      
+        Input:  key(required)  , cat_id(required)      
         Output: Return Scategory(object) 
     */
     public function getScategoryById(Request $request){

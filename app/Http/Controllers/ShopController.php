@@ -212,7 +212,7 @@ class ShopController extends MyFunction
 
         /*
         This Function getShopById v1.0
-        Input:  key(required)        , id(required)      
+        Input:  key(required)        , shop_id(required)      
         Output: Return shop(object) 
     */
     public function getShopById(Request $request){

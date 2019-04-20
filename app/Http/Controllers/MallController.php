@@ -62,7 +62,7 @@ class MallController extends MyFunction
 
     /*
         This Function getMallById v1.0
-        Input:  key(required)        , id(required)      
+        Input:  key(required)        , mall_id(required)      
         Output: Return mall(object) 
     */
     public function getMallById(Request $request){
@@ -80,7 +80,7 @@ class MallController extends MyFunction
        $mall_id = $this->checkParam($request->mall_id);
       
       $mallInfo = Mall::where('id',$mall_id)->get();
-      
+
        return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $mallInfo] , 200);   
    }
    
