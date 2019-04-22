@@ -103,3 +103,7 @@ Route::get('/getShopById', 'ShopController@getShopById');
 
 
 Route::get('/getScategoryById', 'ProductController@getScategoryById');
+
+
+
+Route::get('/getMallIdByProductId', 'OrderController@getMallIdByProductId');

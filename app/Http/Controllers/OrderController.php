@@ -148,7 +148,7 @@ class OrderController extends MyFunction
         }     
 
        
-
+        
 
     //check if products are the same mall
        $mall_id = $this->getMallId($orderProducts[0]->product_id);
@@ -280,8 +280,41 @@ class OrderController extends MyFunction
         return response()->json([  'message' => __('errors.ok')  , 'data' => Order::find($order->id)] , 200);
     }
 
+    /*
+        This Function getMallIdByProductId v1.0
+        Input:  key(required)  , product_id(required) 
+        Output:Return mall id       
+    */
+public function getMallIdByProductId(Request $request){
+
+    // check params 
+    if(!$this->requiredParams($request, ['key','product_id'])){
+        return response()->json(['status' => 'error' , 'message' => __('errors.missing-params') ] , 400);
+    }
 
 
+    $key = $this->checkParam($request->key);
+    if ($key !== self::KEY) {
+        return response()->json(['status' => 'error' , 'message' =>  __('errors.invalid-request') ] , 400);
+    }   
+
+    $id = $request->product_id;
+
+    // check if product exists
+    $product= Product::find($id);
+
+    if($product){
+        // check if customers exists
+        $mall = Mall::whereHas('shop.products', function ($query)  use ($id){
+            $query->where('id',$id);
+        })->first(['id']);
+            $mall_id =  $mall->id;
+    } else {
+        $mall_id ="";
+    }
+
+    return response()->json([   'data' => $mall_id] , 200);
+}
  
 
 
