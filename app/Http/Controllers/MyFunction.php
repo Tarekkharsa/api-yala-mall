@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Mall;
+use App\{Mall,
+    Gallery};
 class MyFunction extends Controller
 {
     const KEY = "1";
@@ -105,4 +106,29 @@ class MyFunction extends Controller
         return $mall_id;
     }
 
+    
+    public function getMallIdByShop($id){
+ 
+        // check if customers exists
+        $mall = Mall::whereHas('shop', function ($query)  use ($id){
+            $query->where('id',$id);
+        })->first(['id']);
+         $mall_id =  $mall->id;
+        return $mall_id;
+    }
+
+
+    public function addGallary($img,$product_id){
+
+        $gallries = new Gallery;
+        $gallries->product_id = $product_id;
+        if (File($img)) {
+            $image = file($img);
+            $input['imagename'] = time().'.'.$image->getClientOriginalExtension();
+            $dest = public_path('/images');
+            $image->move($dest, $input['imagename']);
+            $gallries->image = $input['imagename'];
+        }
+        $gallries->save();
+    }
 }

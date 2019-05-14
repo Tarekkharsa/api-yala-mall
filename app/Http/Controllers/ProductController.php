@@ -33,7 +33,7 @@ class ProductController extends MyFunction
         $id = $this->checkParam($request->id);
         $ProductByCategory = Product::with('gallery')->whereHas('shop.shopCategory.scatecory', function ($query) use($id) {
             $query->where('id',$id);
-        })->get();
+        })->where('available' ,1)->get();
 
         // $ProductByCategory = Scategory::with('shops.products')->where('id',$request->id)->get();
         return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $ProductByCategory] , 200);
@@ -60,7 +60,7 @@ class ProductController extends MyFunction
       
 
 
-        $ProductByshop = Product::with('gallery')->where('shop_id',$request->id)->get();
+        $ProductByshop = Product::with('gallery')->where('shop_id',$request->id)->where('available' ,1)->get();
         return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $ProductByshop] , 200);
 
     }
@@ -85,7 +85,7 @@ class ProductController extends MyFunction
         $mall_id = $this->checkParam($request->mall_id);
          $ProductByMAll = Product::with('gallery')->whereHas('shop.mall', function ($query) use($mall_id) {
             $query->where('id',$mall_id);
-        })->get();
+        })->where('available' ,1)->get();
 
         // $ProductByMAll = Mall::with('Shop.products')->where('id', $request->mall_id)->get();
         return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $ProductByMAll] , 200);
@@ -113,7 +113,7 @@ class ProductController extends MyFunction
 
 
 
-        $Products = Product::with('gallery')->get();
+        $Products = Product::with('gallery')->where('available' ,1)->get();
         return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $Products] , 200);
 
     }
@@ -138,7 +138,7 @@ class ProductController extends MyFunction
 
 
 
-        $productDetails = Product::with('gallery')->where('id',$request->id)->get();
+        $productDetails = Product::with('gallery')->where('id',$request->id)->where('available' ,1)->get();
         return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $productDetails] , 200);
 
     }
@@ -166,6 +166,7 @@ class ProductController extends MyFunction
         return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $Pcategory] , 200);
 
     }
+
 
 
         /*
@@ -241,7 +242,7 @@ class ProductController extends MyFunction
 
 
 
-        $Pcategory = Product::with('gallery')->where('name','like','%'.$request->name.'%')->get();
+        $Pcategory = Product::with('gallery')->where('name','like','%'.$request->name.'%')->where('available' ,1)->get();
         return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $Pcategory] , 200);
 
     }
@@ -264,7 +265,7 @@ class ProductController extends MyFunction
 
 
 
-        $Pcategory = Product::with('gallery')->where('name','like','%'.$request->name.'%')->where('shop_id',$request->shop_id)->get();
+        $Pcategory = Product::with('gallery')->where('name','like','%'.$request->name.'%')->where('shop_id',$request->shop_id)->where('available' ,1)->get();
         return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $Pcategory] , 200);
 
     }
@@ -291,7 +292,7 @@ class ProductController extends MyFunction
 
         $Pcategory = Product::with('gallery')->where('name','like','%'.$request->name.'%')->whereHas('shop.mall', function ($query) use($mall_id) {
             $query->where('id',$mall_id);
-        })->get();
+        })->where('available' ,1)->get();
         return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $Pcategory] , 200);
 
     }
@@ -317,7 +318,7 @@ class ProductController extends MyFunction
 
         $scategory = Product::with('gallery')->where('name','like','%'.$request->name.'%')->whereHas('shop.shopCategory.scatecory', function ($query) use($cat_id) {
             $query->where('id',$cat_id);
-        })->get();
+        })->where('available' ,1)->get();
         return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $scategory] , 200);
 
     }

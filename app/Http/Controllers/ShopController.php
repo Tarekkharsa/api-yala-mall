@@ -81,7 +81,7 @@ class ShopController extends MyFunction
 
 
     
-  /*
+    /*
         This Function getShopCategories v1.0
         Input:  key(required)   , shop_id(required)   
         Output: Return all shop categories with shop object only
@@ -107,7 +107,7 @@ class ShopController extends MyFunction
     }
 
 
-        /*
+    /*
         This Function getOffers v1.0
         Input:  key(required)    
         Output: Return all shop offers with shop 
@@ -130,6 +130,33 @@ class ShopController extends MyFunction
         return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $offers] , 200);
 
     }
+
+    /*
+        This Function getOfferByShop v1.0
+        Input:  key(required)    
+        Output: Return  shop offers  
+    */
+    public function getOfferByShop(Request $request){
+        // check params 
+        if(!$this->requiredParams($request, ['key','shop_id'])){
+            return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
+        }
+
+        $key = $this->checkParam($request->key);
+        if ($key !== self::KEY) {
+            return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
+        }
+
+        $shop_id =  $this->checkParam($request->shop_id);
+
+        $offers = Offer::where('shop_id',$shop_id)->where('active','1')->orderBy('created_at', 'DESC')->get();
+
+        return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $offers] , 200);
+
+    }
+
+
+
 
 
     

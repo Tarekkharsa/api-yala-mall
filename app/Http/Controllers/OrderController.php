@@ -138,7 +138,7 @@ class OrderController extends MyFunction
             return response()->json(['status' => 'error' , 'message' => __('errors.the-address-is-not-exists') ] , 400);
         }
 
-     
+
 
         // fill orderProducts array 
         $orderProducts = array();
@@ -147,17 +147,16 @@ class OrderController extends MyFunction
             array_push($orderProducts, $one);            
         }     
 
-       
         
 
-    //check if products are the same mall
+       //check if products are the same mall
        $mall_id = $this->getMallId($orderProducts[0]->product_id);
        foreach($orderProducts as $product){
            $row = $this->getMallId($product->product_id); 
            if ($row != $mall_id) {
                return response()->json(['status' => 'error' , 'message' => 'products are not in the same Mall' ] , 400);
-           }
- 
+            }
+
        }
 
       
@@ -186,7 +185,6 @@ class OrderController extends MyFunction
         }
 
 
-      
    // check sale of shop and min Total Shop Cost
         $allShops = array();
         $minTotalShopCost = 0 ;
@@ -280,6 +278,9 @@ class OrderController extends MyFunction
         return response()->json([  'message' => __('errors.ok')  , 'data' => Order::find($order->id)] , 200);
     }
 
+
+
+    
     /*
         This Function getMallIdByProductId v1.0
         Input:  key(required)  , product_id(required) 
@@ -313,7 +314,7 @@ public function getMallIdByProductId(Request $request){
         $mall_id ="";
     }
 
-    return response()->json([   'data' => $mall_id] , 200);
+    return response()->json([   'mall_id' => $mall_id] , 200);
 }
  
 
