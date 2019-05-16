@@ -9,4 +9,5 @@ class Size extends Model
     public function pcategory_size(){
         return $this->hasMany(SizeType::class);
      }
+
 }

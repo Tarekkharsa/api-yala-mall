@@ -24,5 +24,8 @@ class Product extends Model
     public function pCategory_size(){
         return $this->belongsTo(SizeType::class,'size_pcategory_id');
      }
-   
+  
+    public function sizes(){
+        return $this->belongsToMany(Size::class , 'size_pcategories' , 'size_id' , 'pcategory_id');
+    }
 }

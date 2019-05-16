@@ -98,5 +98,5 @@ Route::get('/getAllCustomer', 'Dashbord\DashbordDeliveryController@getAllCustome
 Route::post('/blockCustomer', 'Dashbord\DashbordDeliveryController@blockCustomer');
 
 
-
+Route::get('/getLocationsByCityId', 'Dashbord\DashbordDeliveryController@getLocationsByCityId');
 

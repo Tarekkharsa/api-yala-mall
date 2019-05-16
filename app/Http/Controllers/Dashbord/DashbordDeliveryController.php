@@ -265,4 +265,31 @@ class DashbordDeliveryController extends MyFunction
 
         return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $customer] , 200);    
     }
+
+
+
+
+
+        /*
+        This Function getLocationsByCityId v1.0
+        Input:  key , city_id  
+        Output: Return all location by city id
+    */
+    public function getLocationsByCityId(Request $request){
+        // check params 
+        if(!$this->requiredParams($request, ['key','city_id'])){
+            return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
+        }
+
+        $key = $this->checkParam($request->key);
+        if ($key !== self::KEY) {
+            return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
+        }
+
+        $city_id = $this->checkParam($request->city_id);
+
+        $locations = Location::where('city_id',$city_id )->get();
+        return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $locations] , 200);    
+    }
+
 }

@@ -136,9 +136,9 @@ class ProductController extends MyFunction
             return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
         }
 
+        
 
-
-        $productDetails = Product::with('gallery')->where('id',$request->id)->where('available' ,1)->get();
+        $productDetails = Product::with('gallery')->with('pCategory_size.size')->where('id',$request->id)->where('available' ,1)->get();
         return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $productDetails] , 200);
 
     }

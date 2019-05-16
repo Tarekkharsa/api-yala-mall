@@ -133,7 +133,7 @@ class ShopController extends MyFunction
 
     /*
         This Function getOfferByShop v1.0
-        Input:  key(required)    
+        Input:  key(required)   ,shop_id(required)  
         Output: Return  shop offers  
     */
     public function getOfferByShop(Request $request){
