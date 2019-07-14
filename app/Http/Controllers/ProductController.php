@@ -13,14 +13,16 @@ use Illuminate\Http\Request;
 
 class ProductController extends MyFunction
 {
- 
-    
-    /*
-        This Function getProductByCategory v1.0
-        Input:  key(required)     , id(required)   
-        Output: Return  sCategory  with shop with Products
+
+
+
+
+            /*
+        This Function getSizeByPcategory  v1.0
+        Input:  key(required)  , id(required)
+        Output: get  Size by pcategory | return pcatecory with sizes 
     */
-    public function getProductByCategory(Request $request){
+    public function getSizeByPcategory(Request $request){
         // check params 
         if(!$this->requiredParams($request, ['key','id'])){
             return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
@@ -30,10 +32,41 @@ class ProductController extends MyFunction
         if ($key !== self::KEY) {
             return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
         }
+
+
+        $pcategory_id=$this->checkParam($request->id);
+        $Pcategory = Size::whereHas('pcategory_size', function ($query) use($pcategory_id) {
+                                                    $query->where('pcategory_id',$pcategory_id);
+                                                })->get();
+        return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $Pcategory] , 200);
+
+    }
+
+
+ 
+    
+    
+    /*
+        This Function getProductByCategory v1.0
+        Input:  key(required)     , id(required)   
+        Output: Return  sCategory  with shop with Products
+    */
+    public function getProductByCategory(Request $request){
+        // check params 
+        if(!$this->requiredParams($request, ['key','id','last_id'])){
+            return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
+        }
+
+        $key = $this->checkParam($request->key);
+        if ($key !== self::KEY) {
+            return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
+        }
         $id = $this->checkParam($request->id);
+        $last_id = $this->checkParam($request->last_id);
+
         $ProductByCategory = Product::with('gallery')->whereHas('shop.shopCategory.scatecory', function ($query) use($id) {
             $query->where('id',$id);
-        })->where('available' ,1)->get();
+        })->where('available' ,1)->offset($last_id)->limit(10)->get();
 
         // $ProductByCategory = Scategory::with('shops.products')->where('id',$request->id)->get();
         return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $ProductByCategory] , 200);
@@ -48,7 +81,7 @@ class ProductController extends MyFunction
     */
     public function getProductByshop(Request $request){
         // check params 
-        if(!$this->requiredParams($request, ['key','id'])){
+        if(!$this->requiredParams($request, ['key','id','last_id'])){
             return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
         }
 
@@ -57,10 +90,10 @@ class ProductController extends MyFunction
             return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
         }
 
-      
+        $last_id = $this->checkParam($request->last_id);
 
 
-        $ProductByshop = Product::with('gallery')->where('shop_id',$request->id)->where('available' ,1)->get();
+        $ProductByshop = Product::with('gallery')->where('shop_id',$request->id)->where('available' ,1)->offset($last_id)->limit(10)->get();
         return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $ProductByshop] , 200);
 
     }
@@ -68,12 +101,12 @@ class ProductController extends MyFunction
 
      /*
         This Function getProductByMAll v1.0
-        Input:  key(required)  ,mall_id(required)
-        Output: Return mall with shop with Product
+        Input:  key(required)  ,mall_id(required) , last_id(required)
+        Output: Return  Product object
     */
     public function getProductByMall(Request $request){
         // check params 
-        if(!$this->requiredParams($request, ['key','mall_id'])){
+        if(!$this->requiredParams($request, ['key','mall_id','last_id'])){
             return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
         }
 
@@ -81,11 +114,11 @@ class ProductController extends MyFunction
         if ($key !== self::KEY) {
             return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
         }
-
+        $last_id = $this->checkParam($request->last_id);
         $mall_id = $this->checkParam($request->mall_id);
-         $ProductByMAll = Product::with('gallery')->whereHas('shop.mall', function ($query) use($mall_id) {
-            $query->where('id',$mall_id);
-        })->where('available' ,1)->get();
+            $ProductByMAll = Product::with('gallery')->whereHas('shop.mall', function ($query) use($mall_id) {
+                $query->where('id',$mall_id);
+            })->where('available' ,1)->offset($last_id)->limit(2)->get();
 
         // $ProductByMAll = Mall::with('Shop.products')->where('id', $request->mall_id)->get();
         return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $ProductByMAll] , 200);
@@ -167,14 +200,12 @@ class ProductController extends MyFunction
 
     }
 
-
-
-        /*
-        This Function getSizeByPcategory  v1.0
+       /*
+        This Function getSizes  v1.0
         Input:  key(required)  , id(required)
-        Output: get  Size by pcategory | return pcatecory with sizes 
+        Output: get all product Size
     */
-    public function getSizeByPcategory(Request $request){
+    public function getSizes(Request $request){
         // check params 
         if(!$this->requiredParams($request, ['key','id'])){
             return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
@@ -186,14 +217,15 @@ class ProductController extends MyFunction
         }
 
 
-        $pcategory_id=$this->checkParam($request->id);
-        $Pcategory = Size::whereHas('pcategory_size', function ($query) use($pcategory_id) {
-                                                    $query->where('pcategory_id',$pcategory_id);
-                                                })->get();
-        return response()->json(['status' => 'success' , 'message' => 'OK111', 'data' => $Pcategory] , 200);
+
+        $sizes = Product::with('productsize.sizes')->where('id',$this->checkParam($request->id))->get();
+        return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $sizes] , 200);
 
     }
 
+
+
+ 
 
 
      

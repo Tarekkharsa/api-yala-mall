@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\{Mall,
     Gallery};
+    use Intervention\Image\ImageManagerStatic as Image;
 class MyFunction extends Controller
 {
     const KEY = "1";
@@ -131,4 +132,19 @@ class MyFunction extends Controller
         }
         $gallries->save();
     }
+
+
+
+
+
+
+    public function image($name){
+       
+        $storagePath = public_path('upload/'.$name);
+        
+        if (!file_exists('upload/'.$name)) {
+            return 'OOOOOps';
+        }
+       return Image::make($storagePath)->response();
+   }
 }

@@ -26,6 +26,9 @@ class Product extends Model
      }
   
     public function sizes(){
-        return $this->belongsToMany(Size::class , 'size_pcategories' , 'size_id' , 'pcategory_id');
+        return $this->belongsToMany('App\Size' , 'product_size' , 'product_id' , 'size_id');
+    }
+    public function productsize(){
+        return $this->hasMany(ProductSize::class);
     }
 }

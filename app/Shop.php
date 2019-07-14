@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Shop extends Model
 {
-   // public function order(){
-    //     return $this->belongsToMany('App\Order' , 'bills' , 'order_id' , 'shop_id');
-    // }
+//    public function orders(){
+//         return $this->belongsToMany('App\Order' , 'bills' , 'shop_id' , 'order_id');
+//     }
     
 
     public function sCategory(){
@@ -39,7 +39,7 @@ class Shop extends Model
         return $this->belongsToMany('App\Order' , 'bills' , 'shop_id' , 'order_id');
     }
     public function owner(){
-        return $this->belongsTo(Owner::class);
+        return $this->belongsTo(Owner::class , 'owner_id');
      }
 
      public function mall(){

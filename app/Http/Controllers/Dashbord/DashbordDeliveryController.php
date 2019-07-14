@@ -23,6 +23,45 @@ class DashbordDeliveryController extends MyFunction
    
 
 
+
+ 
+     /*
+        This Function addOwner v1.0
+        Input:  'key','full_name','username','password','phone','token'    
+        Output: return owner object
+    */
+    public function addOwner(Request $request){
+        // check params 
+        if(!$this->requiredParams($request, ['key','full_name','username','password','phone'])){
+            return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
+        }
+
+        $key = $this->checkParam($request->key);
+        if ($key !== self::KEY) {
+            return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
+        }
+
+        $owner = new Owner;
+        $owner->full_name = $this->checkParam($request->full_name);
+        $owner->username = $this->checkParam($request->username);
+        $owner->password = bcrypt ($this->checkParam($request->password));
+        $owner->phone = $this->checkParam($request->phone);
+        $owner->token = $this->randoomString(32);
+        $owner->save();
+
+        return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $owner] , 200);    
+    }
+
+
+
+
+
+
+
+
+
+    /////////
+
   
      /*
         This Function addCity v1.0

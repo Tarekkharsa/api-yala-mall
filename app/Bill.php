@@ -14,7 +14,7 @@ class Bill extends Model
         return $this->belongsTo(Shop::class);
     }
 
-    public function billProduct(){
-    	return $this->hasMany(BillProduct::class);
+    public function bill_products(){
+    	return $this->hasMany(BillProduct::class,'bill_id');
     }
 }

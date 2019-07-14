@@ -10,4 +10,17 @@ class Size extends Model
         return $this->hasMany(SizeType::class);
      }
 
+
+     public function products(){
+        return $this->belongsToMany(Product::class , 'product_size' , 'size_id' , 'product_id');
+    }
+
+
+    public function pcategory(){
+        return $this->belongsToMany(Pcategory::class , 'size_pcategories' , 'size_id' , 'pcategory_id');
+    }
+
+    public function productsize(){
+        return $this->hasMany(ProductSize::class);
+    }
 }

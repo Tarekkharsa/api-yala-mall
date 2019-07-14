@@ -17,10 +17,19 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
+
+Route::get('/images/{name}', 'MyFunction@image');
+
 Route::post('/register', 'RegisterLoginController@register');
 Route::post('/login', 'RegisterLoginController@login');
 Route::get('/getCities', 'CityLocationController@getCities');
 Route::get('/getMalls', 'MallController@getMalls');
+
+Route::get('/getOfferByMall', 'MallController@getOfferByMall');
+
+
+
 Route::get('/getShops', 'ShopController@getShops');
 Route::get('/getShop', 'ShopController@getShop');
 Route::get('/getShopCategories', 'ShopController@getShopCategories');
@@ -38,7 +47,7 @@ Route::get('/getProducts', 'ProductController@getProducts');
 Route::get('/getCustomerOrders', 'OrderController@getCustomerOrders');
 Route::get('/getProductDetails', 'ProductController@getProductDetails');
 Route::get('/getPcategory', 'ProductController@getPcategory');
-Route::get('/getSize', 'ProductController@getSize');
+Route::get('/getSizes', 'ProductController@getSizes');
 Route::get('/getSizeByPcategory', 'ProductController@getSizeByPcategory');
 Route::get('/getCategoryByMall', 'ShopController@getCategoryByMall');
 Route::get('/getPcategoryByScategory', 'ProductController@getPcategoryByScategory');
@@ -55,6 +64,17 @@ Route::get('/getScategoryById', 'ProductController@getScategoryById');
 Route::get('/getMallIdByProductId', 'OrderController@getMallIdByProductId');
 Route::get('/getOfferByShop', 'ShopController@getOfferByShop');
 
+Route::get('/getSliders', 'MallController@getSliders');
+
+Route::post('/addFavorite', 'CustomerController@addFavorite');
+Route::post('/deleteFavorite', 'CustomerController@deleteFavorite');
+Route::post('/rateShop','CustomerController@rateShop');
+Route::post('/rateDriver','CustomerController@rateDriver');
+Route::post('/rateProduct','CustomerController@rateProduct');
+Route::get('/getServices', 'CustomerController@getServices');
+
+
+Route::get('/rateNotification', 'CustomerController@rateNotification');
 
 //==================================== Api Dashbord ===========================
 
@@ -76,16 +96,9 @@ Route::post('/addPcategory', 'Dashbord\DashbordShopController@addPcategory');
 Route::post('/addSize', 'Dashbord\DashbordShopController@addSize');
 
 Route::get('/getOrders', 'Dashbord\DashbordShopController@getOrders');
-Route::get('/getOffer', 'Dashbord\DashbordShopController@getOffer');
-Route::post('/addOffer', 'Dashbord\DashbordShopController@addOffer');
-Route::post('/updateOffer', 'Dashbord\DashbordShopController@updateOffer');
-Route::post('/deleteOffer', 'Dashbord\DashbordShopController@deleteOffer');
-Route::post('/updateOfferState', 'Dashbord\DashbordShopController@updateOfferState');
 
-Route::get('/getShopByOwner', 'Dashbord\DashbordShopController@getShopByOwner');
-Route::post('/addProduct', 'Dashbord\DashbordProductController@addProduct');
-Route::post('/updateProductState', 'Dashbord\DashbordProductController@updateProductState');
-Route::post('/deleteProduct', 'Dashbord\DashbordProductController@deleteProduct');
+
+
 
 Route::post('/addCity', 'Dashbord\DashbordDeliveryController@addCity');
 Route::post('/addLocation', 'Dashbord\DashbordDeliveryController@addLocation');
@@ -99,4 +112,59 @@ Route::post('/blockCustomer', 'Dashbord\DashbordDeliveryController@blockCustomer
 
 
 Route::get('/getLocationsByCityId', 'Dashbord\DashbordDeliveryController@getLocationsByCityId');
+Route::post('/addOwner', 'Dashbord\DashbordDeliveryController@addOwner');
 
+//================================== owner Dashbord =================
+Route::post('/owner/login', 'Dashbord\OwnerController@login');
+
+Route::get('/owner/getShopByOwner', 'Dashbord\DashbordShopController@getShopByOwner');
+Route::post('/owner/addProduct', 'Dashbord\DashbordProductController@addProduct');
+Route::post('/owner/updateProductState', 'Dashbord\DashbordProductController@updateProductState');
+Route::post('/owner/deleteProduct', 'Dashbord\DashbordProductController@deleteProduct');
+
+
+Route::get('/owner/getOffer', 'Dashbord\DashbordShopController@getOffer');
+Route::post('/owner/addOffer', 'Dashbord\DashbordShopController@addOffer');
+Route::post('/owner/updateOffer', 'Dashbord\DashbordShopController@updateOffer');
+Route::post('/owner/deleteOffer', 'Dashbord\DashbordShopController@deleteOffer');
+Route::post('/owner/changeOfferStatus', 'Dashbord\OwnerController@changeOfferStatus');
+
+Route::post('/owner/changeShopStatus', 'Dashbord\OwnerController@changeShopStatus');
+
+Route::get('/owner/getOffers', 'Dashbord\OwnerController@getOffers');
+
+Route::get('/owner/getSizeByPcategory', 'Dashbord\OwnerController@getSizeByPcategory');
+Route::get('/owner/getPcategory', 'Dashbord\OwnerController@getPcategory');
+
+Route::get('/owner/getProductByOwner', 'Dashbord\OwnerController@getProductByOwner');
+
+
+Route::post('/owner/updateProduct', 'Dashbord\DashbordProductController@updateProduct');
+Route::get('/owner/getProductDetails', 'Dashbord\OwnerController@getProductDetails');
+
+
+Route::get('/owner/getOrders', 'Dashbord\OwnerController@getOrders');
+
+//================================== Support Dashbord =================
+
+
+Route::group(['prefix' => '/dashbord'], function () {
+    Route::get('getMalls', 'SupportDashbord\Mallcontroller@getMalls');
+    Route::get('getMall', 'SupportDashbord\Mallcontroller@getMall');
+    Route::post('/addMall', 'SupportDashbord\Mallcontroller@addMall');
+    Route::post('/updateMall', 'SupportDashbord\Mallcontroller@updateMall');
+    Route::post('/deleteMall', 'SupportDashbord\Mallcontroller@deleteMall');
+    
+    Route::get('getShops', 'SupportDashbord\Shopcontroller@getShops');
+    Route::get('getShop', 'SupportDashbord\Shopcontroller@getShop');
+    
+    Route::post('/addShop', 'SupportDashbord\Shopcontroller@addShop');
+    Route::post('/updateShop', 'SupportDashbord\Shopcontroller@updateShop');
+    Route::post('/deleteShop', 'SupportDashbord\Shopcontroller@deleteShop');
+    
+    Route::get('getProducts', 'SupportDashbord\Productcontroller@getProducts');
+    Route::get('getProduct', 'SupportDashbord\Productcontroller@getProduct');
+
+    Route::post('addProduct', 'Dashbord\Productcontroller@addProduct');
+    
+});

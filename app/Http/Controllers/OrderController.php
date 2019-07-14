@@ -171,6 +171,8 @@ class OrderController extends MyFunction
             $allProductsDetails[$i]['id']=$product->product_id;
             $allProductsDetails[$i]['notes']=$product->notes;
             $allProductsDetails[$i]['quantity']=$product->quantity;
+            if($product->size_id=="") $product->size_id =NULL;
+            $allProductsDetails[$i]['size_id']=$product->size_id;
             $allProductsDetails[$i]['shop_id']=$row[0]->shop_id;
             $allProductsDetails[$i]['price']=$row[0]->price;
             $allProductsDetails[$i]['discount']=$row[0]->discount;
@@ -269,6 +271,7 @@ class OrderController extends MyFunction
                 $billProduct->sale =  $allProductsDetails[$i]['discount'];
                 $billProduct->quantity   = $allProductsDetails[$i]['quantity'];
                 $billProduct->notes      =$allProductsDetails[$i]['notes'];
+                $billProduct->size_id      =$allProductsDetails[$i]['size_id'];
                 $billProduct->save();
               }
           }

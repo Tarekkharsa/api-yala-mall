@@ -24,7 +24,7 @@ class CityLocationController extends MyFunction
         }
 
 
-        $cities = City::with('locations')->get();
+        $cities = City::with('locations')->get();   
         return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $cities] , 200);    
     }
 }

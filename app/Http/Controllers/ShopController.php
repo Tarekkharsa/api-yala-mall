@@ -62,6 +62,9 @@ class ShopController extends MyFunction
         ->with('shopStatus')
         ->with('mall')
         ->with('offers')
+        ->whereHas('offers', function ($query)  {
+            $query->where('active','1');
+        })
         ->with('orders')
         ->with('scategories')
         ->with('products')
