@@ -24,7 +24,7 @@ class Mallcontroller extends MyFunction
     /*
         This Function getMalls v1.0
         Input:  key(required)        
-        Output: Return all Malls with location  .city
+        Output: Return all Malls with location  and city
     */
     public function getMalls(Request $request){
         // check params 
@@ -94,11 +94,9 @@ class Mallcontroller extends MyFunction
         if (isset($request->website)) {
             $malls->website =$this->checkParam($request->website);
         }
+
         $malls->phone =$this->checkParam($request->phone);
-
-    
         $malls->location_id =$this->checkParam($request->location_id);
-
         $malls->open_time =$this->checkParam($request->open_time);
         $malls->close_time =$this->checkParam($request->close_time);
 
@@ -109,9 +107,8 @@ class Mallcontroller extends MyFunction
             $image->move($dest, $input['imagename']);
             $malls->logo = $input['imagename'];
         }
-
-
         $malls->save();
+        
         return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $malls] , 200);    
     }
 

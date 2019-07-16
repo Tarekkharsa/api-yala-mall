@@ -243,11 +243,21 @@ class DashbordDeliveryController extends MyFunction
    $id = $this->checkParam($request->id);
 
         $updatedriver = Driver::where('id',  $id)->first();
-        $updatedriver->username = $this->checkParam($request->username);
-        $updatedriver->password = $this->checkParam($request->password);
-        $updatedriver->lat = $this->checkParam($request->lat);
-        $updatedriver->lng = $this->checkParam($request->lng);
-        $updatedriver->car_id = $this->checkParam($request->car_id);
+        if (isset($request->username)) {
+            $updatedriver->username = $this->checkParam($request->username);
+        }
+        if (isset($request->password)) {
+            $updatedriver->password = $this->checkParam($request->password);
+        }
+        if (isset($request->lat)) {
+            $updatedriver->lat = $this->checkParam($request->lat);
+        }
+        if (isset($request->lng)) {
+            $updatedriver->lng = $this->checkParam($request->lng);
+        }
+        if (isset($request->car_id)) {
+            $updatedriver->car_id = $this->checkParam($request->car_id);
+        }
         $updatedriver->save();
 
         return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $updatedriver] , 200);    

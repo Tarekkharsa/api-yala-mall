@@ -73,6 +73,9 @@ Route::post('/rateDriver','CustomerController@rateDriver');
 Route::post('/rateProduct','CustomerController@rateProduct');
 Route::get('/getServices', 'CustomerController@getServices');
 
+Route::get('/getRateProduct', 'CustomerController@getRateProduct');
+Route::get('/getRateShop', 'CustomerController@getRateShop');
+
 
 Route::get('/rateNotification', 'CustomerController@rateNotification');
 
@@ -166,5 +169,38 @@ Route::group(['prefix' => '/dashbord'], function () {
     Route::get('getProduct', 'SupportDashbord\Productcontroller@getProduct');
 
     Route::post('addProduct', 'Dashbord\Productcontroller@addProduct');
+    
+
+    Route::post('/updateProductState', 'Dashbord\DashbordProductController@updateProductState');
+    Route::post('/deleteProduct', 'Dashbord\DashbordProductController@deleteProduct');
+
+    Route::post('/addCity', 'Dashbord\DashbordDeliveryController@addCity');
+    Route::post('/addLocation', 'Dashbord\DashbordDeliveryController@addLocation');
+    Route::post('/addCar', 'Dashbord\DashbordDeliveryController@addCar');
+    Route::get('/getDrivers', 'Dashbord\DashbordDeliveryController@getDrivers');
+    Route::post('/blockDrivers', 'Dashbord\DashbordDeliveryController@blockDrivers');
+    Route::post('/addDriver', 'Dashbord\DashbordDeliveryController@addDriver');
+    Route::post('/updateDriver', 'Dashbord\DashbordDeliveryController@updateDriver');
+    Route::get('/getCustomers', 'Dashbord\DashbordDeliveryController@getAllCustomer');
+    Route::post('/blockCustomer', 'Dashbord\DashbordDeliveryController@blockCustomer');
+    Route::get('/getLocationsByCityId', 'Dashbord\DashbordDeliveryController@getLocationsByCityId');
+
+    Route::post('/addScategory', 'Dashbord\DashbordShopController@addScategory');
+    Route::post('/addPcategory', 'Dashbord\DashbordShopController@addPcategory');
+    Route::post('/addSize', 'Dashbord\DashbordShopController@addSize');
+    Route::post('/deleteSize', 'Dashbord\DashbordShopController@deleteSize');
+    Route::post('/deletePcategory', 'Dashbord\DashbordShopController@deletePcategory');
+    Route::post('/deleteScategory', 'Dashbord\DashbordShopController@deleteScategory');
+
+    Route::get('getPcategory', 'SupportDashbord\Productcontroller@getPcategory');
+    
+    
+});
+
+Route::group(['prefix' => '/driver'], function () {
+    Route::get('/getReadyOrders', 'CarDriverController@getReadyOrders');
+    Route::get('/getSuccessOrders', 'CarDriverController@getSuccessOrders');
+    Route::get('/getWaitingOrders', 'CarDriverController@getWaitingOrders');
+    Route::post('/changeOrderStatus', 'CarDriverController@changeOrderStatus');
     
 });

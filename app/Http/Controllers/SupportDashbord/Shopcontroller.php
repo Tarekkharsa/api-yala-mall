@@ -134,7 +134,8 @@ class Shopcontroller extends MyFunction
             return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
         }
 
-        $shop = Shop::with('mall.location.city')->get();
+        $shop = Shop::with('mall.location.city')
+                      ->get();
 
         if($shop == NULL)
         {
@@ -147,7 +148,7 @@ class Shopcontroller extends MyFunction
            /*
         This Function getShop v1.0
         Input:  key(required) 
-        Output: Return all Shop
+        Output: Return  Shop
     */
     public function getShop(Request $request){
 
@@ -295,9 +296,7 @@ class Shopcontroller extends MyFunction
 
 
         $owner_id = $shop->owner_id;
-
         $request['owner_id'] = $owner_id;
-
         $owner    = new Shopcontroller;
         $response = $owner->updateOwner($request);
 
@@ -327,9 +326,7 @@ class Shopcontroller extends MyFunction
              return response()->json(['status' => 'error' , 'message' => __('errors.shop_phone-not-valid') ] , 400);
             }
         }
-
-        
-
+       
         $shop = Shop::where('id', $id)->with('owner')->first();
         if (isset($request->name)) {
             $shop->name =$this->checkParam($request->name);
@@ -354,11 +351,9 @@ class Shopcontroller extends MyFunction
         }
         if (isset($shop_status_id)) {
             $shop->shop_status_id =$shop_status_id;
-
         }
       
         $shop->owner_id =$owner_id;
-
         
         if (isset($request->lat)) {
             $shop->lat =$this->checkParam($request->lat);
@@ -366,11 +361,10 @@ class Shopcontroller extends MyFunction
         if (isset($request->lng)) {
             $shop->lng =$this->checkParam($request->lng);
         }
-
         if ($shop_phone) {
             $shop->shop_phone =$shop_phone;
        }
-
+       
         if ($request->hasFile('logo')) {
             $image = $request->file('logo');
             $input['imagename'] = time().'.'.$image->getClientOriginalExtension();

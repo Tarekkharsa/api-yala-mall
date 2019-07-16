@@ -364,7 +364,7 @@ class CustomerController extends MyFunction
      
            $orders = Order::with('bills.bill_products') ->whereHas('bills.bill_products', function ($query)  {
             $query->where('rated','0');
-        })->get();
+            })->get();
 
         
 
@@ -400,4 +400,67 @@ class CustomerController extends MyFunction
     
         }
 
+
+        /*
+            This Function getRateProduct v1.0
+            Input:  key  , token , id
+            Output: return  ok 
+         */
+        public function getRateProduct(Request $request){
+
+                  // check params 
+                  if(!$this->requiredParams($request, ['key'  ,'token','id'])){
+                    return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
+                }
+
+                $key = $this->checkParam($request->key);
+                if ($key !== self::KEY) {
+                    return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
+                }
+        
+        
+                $customer = Customer::where('token' , $request->token)->first();
+                if(empty($customer)) {
+                    return response()->json(['status' => 'error' , 'message' => 'customer not exists' ] , 400);
+                }
+                $product = Product::where('id', $this->checkParam($request->id))->first();
+    
+                $oldRate = RateService::where('product_id', $product->id)->where('customer_id',$customer->id)->first();
+
+                if ($oldRate) {
+                    return response()->json(['status' => 'success' , 'message' => 'OK'  , 'data' => $oldRate] , 200); 
+                }
+        }
+
+
+                /*
+            This Function getRateProduct v1.0
+            Input:  key  , token , id
+            Output: return  ok 
+         */
+        public function getRateShop(Request $request){
+
+            // check params 
+            if(!$this->requiredParams($request, ['key'  ,'token','id'])){
+              return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
+          }
+
+          $key = $this->checkParam($request->key);
+          if ($key !== self::KEY) {
+              return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
+          }
+  
+  
+          $customer = Customer::where('token' , $request->token)->first();
+          if(empty($customer)) {
+              return response()->json(['status' => 'error' , 'message' => 'customer not exists' ] , 400);
+          }
+          $shop = Shop::where('id', $this->checkParam($request->id))->first();
+
+          $oldRate = RateService::where('shop_id', $shop->id)->where('customer_id',$customer->id)->first();
+
+          if ($oldRate) {
+              return response()->json(['status' => 'success' , 'message' => 'OK'  , 'data' => $oldRate] , 200); 
+          }
+  }
 }

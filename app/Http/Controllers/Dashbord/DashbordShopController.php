@@ -211,12 +211,12 @@ class DashbordShopController extends MyFunction
 
     /*
         This Function addSize v1.0
-        Input:  key(required) ,name (required) ,pcategory_id(required)     
+        Input:  key(required) ,name(required)     
         Output: return Size object
     */
     public function addSize(Request $request){
         // check params 
-        if(!$this->requiredParams($request, ['key','name','pcategory_id'])){
+        if(!$this->requiredParams($request, ['key','name'])){
             return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
         }
 
@@ -229,19 +229,91 @@ class DashbordShopController extends MyFunction
         $size->name =$this->checkParam($request->name);
         $size->save();
 
-        $sizePcategory = new SizeType;
-        $sizePcategory->pcategory_id = $this->checkParam($request->pcategory_id);
-        $sizePcategory->size_id = $size->id;
-        $sizePcategory->save();
 
 
         return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $size] , 200);    
     }
 
 
+        /*
+        This Function deleteSize v1.0
+        Input:  key(required) , id
+        Output: return Size object
+    */
+    public function deleteSize(Request $request){
+        // check params 
+        if(!$this->requiredParams($request, ['key','id'])){
+            return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
+        }
+
+        $key = $this->checkParam($request->key);
+        if ($key !== self::KEY) {
+            return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
+        }
+
+        $id = $this->checkParam($request->id);
+
+        $size =  Size::where('id', $id)->delete();
 
 
 
+
+        return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => 'delete sucsses'] , 200);    
+    }
+
+
+        /*
+        This Function deletePcategory v1.0
+        Input:  key(required) , id
+        Output: return Size object
+    */
+    public function deletePcategory(Request $request){
+        // check params 
+        if(!$this->requiredParams($request, ['key','id'])){
+            return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
+        }
+
+        $key = $this->checkParam($request->key);
+        if ($key !== self::KEY) {
+            return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
+        }
+
+        $id = $this->checkParam($request->id);
+
+        $Pcategory =  Pcategory::where('id', $id)->delete();
+
+
+
+
+        return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => 'delete sucsses'] , 200);    
+    }
+
+
+           /*
+        This Function deleteScategory v1.0
+        Input:  key(required) , id
+        Output: return Size object
+    */
+    public function deleteScategory(Request $request){
+        // check params 
+        if(!$this->requiredParams($request, ['key','id'])){
+            return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
+        }
+
+        $key = $this->checkParam($request->key);
+        if ($key !== self::KEY) {
+            return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
+        }
+
+        $id = $this->checkParam($request->id);
+
+        $Scategory =  Scategory::where('id', $id)->delete();
+
+
+
+
+        return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => 'delete sucsses'] , 200);    
+    }
     //////
 //getShopOrders
 //updateOrderStatus
