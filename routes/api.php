@@ -194,6 +194,12 @@ Route::group(['prefix' => '/dashbord'], function () {
 
     Route::get('getPcategory', 'SupportDashbord\Productcontroller@getPcategory');
     
+    Route::get('/getSliders', 'MallController@getSliders');
+    Route::post('/addSliders', 'SupportDashbord\MallController@addSliders');
+    Route::post('/updateSliders', 'SupportDashbord\MallController@updateSliders');
+    Route::post('/deleteSliders', 'SupportDashbord\MallController@deleteSliders');
+    
+    
     
 });
 

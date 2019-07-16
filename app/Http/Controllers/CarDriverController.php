@@ -36,7 +36,7 @@ class CarDriverController extends MyFunction
             return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
         }
 
-        $orders = Order::with('bills.shop')->with('status')->where('order_status_id',1)->get();
+        $orders = Order::with('bills.shop')->with('status')->where('order_status_id',3)->get();
       
 
         return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $orders] , 200);    
@@ -67,7 +67,7 @@ class CarDriverController extends MyFunction
         }
         $id = $driver->id;
 
-        $orders = Order::with('bills.shop')->with('status')->where('order_status_id',2)->where('driver_id',$id)->get();
+        $orders = Order::with('bills.shop')->with('status')->where('order_status_id',4)->where('driver_id',$id)->get();
       
 
         return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $orders] , 200);    
@@ -97,7 +97,7 @@ class CarDriverController extends MyFunction
         }
         $id = $driver->id;
 
-        $orders = Order::with('bills.shop')->with('status')->where('order_status_id',3)->where('driver_id',$id)->get();
+        $orders = Order::with('bills.shop')->with('status')->where('order_status_id',5)->where('driver_id',$id)->get();
       
 
         return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $orders] , 200);    

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\{
     Order,
-    offer,
+    Slider,
     Customer,
     Owner,
      Product,
@@ -15,6 +15,7 @@ use App\{
     Mall,
     Scategory,
     Location};
+    use Intervention\Image\ImageManagerStatic as Image;
 class Mallcontroller extends MyFunction
 {
     
@@ -197,4 +198,99 @@ class Mallcontroller extends MyFunction
         return response()->json(['status' => 'success' , 'message' => 'OK'] , 200);    
     }
 
+
+    /*
+        This Function addSliders v1.0
+        Input:  key(required)  ,'title','image'      
+        Output: Return new   slider
+    */
+    public function addSliders(Request $request){
+        // check params 
+        if(!$this->requiredParams($request, ['key','title','image'])){
+            return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
+        }
+
+        $key = $this->checkParam($request->key);
+        if ($key !== self::KEY) {
+            return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
+        }
+
+
+        $sliders = new Slider;
+        $sliders->title = $this->checkParam($request->title);
+
+        if($request->image)
+        {
+                $image_name =  rand().time().rand().'.'. $request->image->getClientOriginalExtension();
+                $sliders->image =  $image_name;
+                Image::make($request->image)->save('upload/'. $image_name);
+                $sliders->save();
+        }
+ 
+        return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $sliders] , 200);    
+    }
+
+    /*
+        This Function updateSliders  v1.0
+        Input:  key(required)    id    
+        Output: Return new   slider
+    */
+    public function updateSliders(Request $request){
+        // check params 
+        if(!$this->requiredParams($request, ['key','id'])){
+            return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
+        }
+
+        $key = $this->checkParam($request->key);
+        if ($key !== self::KEY) {
+            return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
+        }
+
+        $id = $this->checkParam($request->id);
+
+        $sliders =  Slider::where('id', $id)->first();
+
+        if (isset($request->title)) {
+            $sliders->title = $this->checkParam($request->title);
+        }
+        if (isset($request->image)) {
+            if($request->image)
+            {
+                    $image_name =  rand().time().rand().'.'. $request->image->getClientOriginalExtension();
+                    $sliders->image =  $image_name;
+                    Image::make($request->image)->save('upload/'. $image_name);
+                    $sliders->save();
+            }
+        }
+
+ 
+        return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $sliders] , 200);    
+    }
+
+
+     /*
+        This Function deleteSliders  v1.0
+        Input:  key(required)    id    
+        Output: Return delete sucsses
+    */
+    public function deleteSliders(Request $request){
+        // check params 
+        if(!$this->requiredParams($request, ['key','id'])){
+            return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
+        }
+
+        $key = $this->checkParam($request->key);
+        if ($key !== self::KEY) {
+            return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
+        }
+
+        $id = $this->checkParam($request->id);
+        $oldSliders =  Slider::where('id', $id)->first();
+
+        if ($oldSliders) {
+            $sliders =  Slider::where('id', $id)->delete();
+        }
+
+        return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => 'Delete Sucsses'] , 200);    
+    }
 }
