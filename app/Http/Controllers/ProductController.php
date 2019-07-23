@@ -379,4 +379,28 @@ class ProductController extends MyFunction
       
        return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $catInfo] , 200);   
    }
+
+
+
+       /*
+        This Function getScategoryById v1.0
+        Input:  key(required)  , cat_id(required)      
+        Output: Return Scategory(object) 
+    */
+    public function getScategory(Request $request){
+        // check params 
+        if(!$this->requiredParams($request, ['key'])){
+           return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
+       }
+
+       $key = $this->checkParam($request->key);
+       if ($key !== self::KEY) {
+           return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
+       }
+
+      
+      $catInfo = Scategory::get();
+      
+       return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $catInfo] , 200);   
+   }
 }

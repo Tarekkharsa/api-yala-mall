@@ -61,6 +61,9 @@ Route::get('/searchByScategory', 'ProductController@searchByScategory');
 Route::get('/getMallById', 'MallController@getMallById');
 Route::get('/getShopById', 'ShopController@getShopById');
 Route::get('/getScategoryById', 'ProductController@getScategoryById');
+Route::get('/getScategory', 'ProductController@getScategory');
+
+
 Route::get('/getMallIdByProductId', 'OrderController@getMallIdByProductId');
 Route::get('/getOfferByShop', 'ShopController@getOfferByShop');
 
