@@ -17,7 +17,8 @@ use App\{
     Scategory,
     ShopStatus,
     Pcategory,
-    Gallery};
+    Gallery,
+    Size};
     use App\Http\Controllers\MyFunction;
     use App\Cobon;
 use Carbon\Carbon;
@@ -90,7 +91,8 @@ class Productcontroller extends MyFunction
     */
     public function addProduct(Request $request){
         // check params 
-        if(!$this->requiredParams($request, ['key','name','description','price','discount','shop_id','sizes','pcategory_id','images'])){
+        if(!$this->requiredParams($request, ['key','name','description','price','discount','shop_id'
+        ,'sizes','pcategory_id','images'])){
             return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
         }
 
@@ -116,6 +118,7 @@ class Productcontroller extends MyFunction
         $NewProduct->shop_id          = $this->checkParam($request->shop_id);
         $NewProduct->mall_id          = $mall_id;
         $NewProduct->pcategory_id          = $this->checkParam($request->pcategory_id);
+        $NewProduct->available          = $this->checkParam($request->available);
         $NewProduct->save();
 
 
@@ -253,4 +256,57 @@ class Productcontroller extends MyFunction
 
     }
 
+
+        /*
+        This Function deleteProduct v1.0
+        Input:  key(required)        
+        Output:  return delete message
+    */
+    public function deleteProduct(Request $request){
+
+    	$validator = Validator::make($request->all(), [
+	        'id'     => 'required',
+	        'key'    => 'required',
+    	]);
+
+	    if ($validator->fails()) {
+	        return response()->json(['status' => 'error' , 'message' =>  $validator->errors() ] , 400);
+	    }
+
+        $key = $this->checkParam($request->key);
+        if ($key !== self::KEY) {
+            return response()->json(['status' => 'error' , 'message' =>  __('errors.invalid-request') ] , 400);
+        }
+
+        $id = $this->checkParam($request->id);
+        $product = Product::where('id' , $id)->first();
+        if(empty($product)){
+        	return response()->json(['status' => 'error' , 'message' =>  __('errors.product-not-exists') ] , 400);
+        }
+
+        
+          $product->delete();
+
+        return response()->json(['status' => 'success' , 'message' => __('errors.product-deleted-successfuly')] , 200);
+    }
+
+
+
+    public function getSizes(Request $request){
+        // check params 
+        if(!$this->requiredParams($request, ['key'])){
+            return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
+        }
+
+        $key = $this->checkParam($request->key);
+        if ($key !== self::KEY) {
+            return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
+        }
+
+
+
+        $sizes = Size::all();
+        return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $sizes] , 200);
+
+    }
 }

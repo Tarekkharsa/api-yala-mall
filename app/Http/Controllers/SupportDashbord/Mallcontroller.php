@@ -100,6 +100,8 @@ class Mallcontroller extends MyFunction
         $malls->location_id =$this->checkParam($request->location_id);
         $malls->open_time =$this->checkParam($request->open_time);
         $malls->close_time =$this->checkParam($request->close_time);
+        $malls->lat =$this->checkParam($request->lat);
+        $malls->lng =$this->checkParam($request->lng);
 
         if ($request->hasFile('logo')) {
             $image = $request->file('logo');
@@ -110,7 +112,7 @@ class Mallcontroller extends MyFunction
         }
         $malls->save();
         
-        return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $malls] , 200);    
+        return response()->json(['status' => 'success' , 'message' => __('add mall suuccessfully'), 'data' => $malls] , 200);    
     }
 
 
@@ -193,7 +195,12 @@ class Mallcontroller extends MyFunction
         }
         $id = $this->checkParam($request->id);
 
-         Mall::destroy($this->checkParam($id));
+        $mall = Mall::where('id' , $id)->first();
+        if(empty($mall)){
+        	return response()->json(['status' => 'error' , 'message' =>  __('errors.mall-not-exists') ] , 400);
+        }
+            $mall->delete();
+         
 
         return response()->json(['status' => 'success' , 'message' => 'OK'] , 200);    
     }

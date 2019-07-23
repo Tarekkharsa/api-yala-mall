@@ -22,7 +22,7 @@ class OwnerController extends MyFunction
     
     public function login(Request $request){
      
-        if(!$this->requiredParams($request, ['username' , 'password'])){
+        if(!$this->requiredParams($request, ['key','username' , 'password'])){
             return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
         }
 

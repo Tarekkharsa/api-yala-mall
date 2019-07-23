@@ -429,11 +429,13 @@ class CustomerController extends MyFunction
 
                 if ($oldRate) {
                     return response()->json(['status' => 'success' , 'message' => 'OK'  , 'data' => $oldRate] , 200); 
-                }
+                }else{
+                    return response()->json(['status' => 'success' , 'message' => 'OK'  , 'data' => 0] , 200); 
+                  }
         }
 
 
-                /*
+        /*
             This Function getRateProduct v1.0
             Input:  key  , token , id
             Output: return  ok 
@@ -461,6 +463,74 @@ class CustomerController extends MyFunction
 
           if ($oldRate) {
               return response()->json(['status' => 'success' , 'message' => 'OK'  , 'data' => $oldRate] , 200); 
+          }else{
+            return response()->json(['status' => 'success' , 'message' => 'OK'  , 'data' => 0] , 200); 
           }
   }
+
+          /*
+            This Function getRateProduct v1.0
+            Input:  key  , token , id
+            Output: return  ok 
+         */
+        public function getRateDriver(Request $request){
+
+            // check params 
+            if(!$this->requiredParams($request, ['key'  ,'token','id'])){
+              return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
+          }
+
+          $key = $this->checkParam($request->key);
+          if ($key !== self::KEY) {
+              return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
+          }
+  
+  
+          $customer = Customer::where('token' , $request->token)->first();
+          if(empty($customer)) {
+              return response()->json(['status' => 'error' , 'message' => 'customer not exists' ] , 400);
+          }
+          $driver = Driver::where('id', $this->checkParam($request->id))->first();
+
+          $oldRate = RateService::where('driver_id', $driver->id)->where('customer_id',$customer->id)->first();
+
+          if ($oldRate) {
+              return response()->json(['status' => 'success' , 'message' => 'OK'  , 'data' => $oldRate] , 200); 
+          }else{
+            return response()->json(['status' => 'success' , 'message' => 'OK'  , 'data' => 0] , 200); 
+          }
+  }
+
+
+
+
+         /*
+            This Function getFavorite v1.0
+            Input:  key (required)  , token (required) 
+            Output: return Favorite 
+         */
+        public function getFavoriteList(Request $request){
+
+            // check params 
+            if(!$this->requiredParams($request, ['key'  ,'
+            '])){
+                return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
+            }
+    
+            $key = $this->checkParam($request->key);
+            if ($key !== self::KEY) {
+                return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
+            }
+    
+    
+            $customer = Customer::where('token' , $request->token)->first();
+            if(empty($customer)) {
+                return response()->json(['status' => 'error' , 'message' => 'customer not exists' ] , 400);
+            }
+            $id = $customer->id;
+            $favorite = Favorite::where('customer_id',$id)->with('product.gallery')->get();
+
+            return response()->json(['status' => 'success' , 'message' => 'OK'  , 'data' => $favorite] , 200); 
+    
+        }
 }

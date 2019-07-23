@@ -162,7 +162,7 @@ class Shopcontroller extends MyFunction
             return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
         }
         $id = $this->checkParam($request->id);
-        $shop = Shop::with('mall.location.city')->where('id',$id)->get();
+        $shop = Shop::with('mall.location.city')->with('owner')->where('id',$id)->first();
 
         if($shop == NULL)
         {
@@ -415,9 +415,51 @@ class Shopcontroller extends MyFunction
     }
 
 
-    //// product area  //////
+  
+    public function getShopStatus(Request $request){
+        // check params 
+        if(!$this->requiredParams($request, ['key'])){
+           return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
+       }
+
+       $key = $this->checkParam($request->key);
+       if ($key !== self::KEY) {
+           return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
+       }
 
 
+      
+      $shopInfo = ShopStatus::get();
+      
+       return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $shopInfo] , 200);   
+   }
+
+    
+
+
+           /*
+        This Function getShopByMall v1.0
+        Input:  key(required)  , mall_id(required)
+        Output: Return all shops by mall where mall_id == request -> mall_id
+    */
+    public function getShopByMall(Request $request){
+
+        // check params 
+        if(!$this->requiredParams($request, ['key'])){
+            return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
+        }
+
+        $key = $this->checkParam($request->key);
+        if ($key !== self::KEY) {
+            return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
+        }
+
+
+
+        $shop = Shop::get();
+        return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $shop] , 200);
+
+    }
 
     
 }

@@ -205,13 +205,18 @@ class DashbordDeliveryController extends MyFunction
         if ($key !== self::KEY) {
             return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
         }
-
+        $username = $this->checkParam($request->username);
         
+        $owners = Driver::where('username' , $username)->first();
+        if (!empty($owners)) {
+        	return response()->json(['status' => 'error' , 'message' =>  __('errors.username-taken') ] , 400);
+        }
+
    
 
         $driver = new Driver;
         $driver->username = $this->checkParam($request->username);
-        $driver->password = $this->checkParam($request->password);
+        $driver->password = bcrypt($this->checkParam($request->password));
         $driver->token = $this->randoomString(32);
         $driver->lat = $this->checkParam($request->lat);
         $driver->lng = $this->checkParam($request->lng);

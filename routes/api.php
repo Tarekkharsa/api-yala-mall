@@ -75,6 +75,9 @@ Route::get('/getServices', 'CustomerController@getServices');
 
 Route::get('/getRateProduct', 'CustomerController@getRateProduct');
 Route::get('/getRateShop', 'CustomerController@getRateShop');
+Route::get('/getRateDriver', 'CustomerController@getRateDriver');
+
+Route::get('/getFavoriteList', 'CustomerController@getFavoriteList');
 
 
 Route::get('/rateNotification', 'CustomerController@rateNotification');
@@ -172,7 +175,7 @@ Route::group(['prefix' => '/dashbord'], function () {
     
 
     Route::post('/updateProductState', 'Dashbord\DashbordProductController@updateProductState');
-    Route::post('/deleteProduct', 'Dashbord\DashbordProductController@deleteProduct');
+    Route::post('/deleteProduct', 'SupportDashbord\Productcontroller@deleteProduct');
 
     Route::post('/addCity', 'Dashbord\DashbordDeliveryController@addCity');
     Route::post('/addLocation', 'Dashbord\DashbordDeliveryController@addLocation');
@@ -199,8 +202,13 @@ Route::group(['prefix' => '/dashbord'], function () {
     Route::post('/updateSliders', 'SupportDashbord\MallController@updateSliders');
     Route::post('/deleteSliders', 'SupportDashbord\MallController@deleteSliders');
     
+     Route::get('/getShopStatus', 'SupportDashbord\Shopcontroller@getShopStatus');
     
-    
+     Route::get('/getSizes', 'SupportDashbord\Productcontroller@getSizes');
+
+     Route::get('/getShopByMall', 'SupportDashbord\Shopcontroller@getShopByMall');
+
+     
 });
 
 Route::group(['prefix' => '/driver'], function () {
@@ -208,5 +216,6 @@ Route::group(['prefix' => '/driver'], function () {
     Route::get('/getSuccessOrders', 'CarDriverController@getSuccessOrders');
     Route::get('/getWaitingOrders', 'CarDriverController@getWaitingOrders');
     Route::post('/changeOrderStatus', 'CarDriverController@changeOrderStatus');
+    Route::post('/login', 'CarDriverController@login');
     
 });

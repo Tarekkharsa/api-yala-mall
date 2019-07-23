@@ -16,9 +16,44 @@ use App\{
     Pcategory,
     Size,
     SizeType};
+
+    use Illuminate\Support\Facades\Hash;
 class CarDriverController extends MyFunction
 {
-    
+    /*
+        This Function login v1.0
+        Input:  key  , username , password
+        Output: Return drievr
+    */
+    public function login(Request $request){
+     
+        if(!$this->requiredParams($request, ['key','username' , 'password'])){
+            return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
+        }
+
+        $key = $this->checkParam($request->key);
+        if ($key !== self::KEY) {
+            return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
+        }
+        
+        
+        $driver = Driver::where('username' , $this->checkParam($request->username))->first();
+        
+        if(!empty($driver))
+        {
+
+            if (Hash::check($this->checkParam($request->password), $driver->password))
+            { 
+                
+                return response()->json(['status' => 'success' , 'message' => 'OK' , 'data' => $driver] , 200);
+            }
+            return response()->json(['status' => 'error' , 'message' => 'invaild password'] , 400);
+
+        } else {
+            return response()->json(['status' => 'error' , 'message' => 'invalid data'] , 400);
+        }
+    }
+
 
     /*
         This Function getReadyOrders v1.0

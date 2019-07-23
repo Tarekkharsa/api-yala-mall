@@ -7,4 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Favorite extends Model
 {
     protected $table = 'favorites';
+
+    public function product(){
+        return $this->belongsTo(Product::class,'product_id');
+    } 
 }
