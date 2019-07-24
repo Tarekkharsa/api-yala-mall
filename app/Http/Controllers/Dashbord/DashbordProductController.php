@@ -68,6 +68,7 @@ class DashbordProductController extends MyFunction
         $NewProduct->shop_id          = $this->checkParam($request->shop_id);
         $NewProduct->mall_id          = $mall_id;
         $NewProduct->pcategory_id          = $this->checkParam($request->pcategory_id);
+        $NewProduct->available          = $this->checkParam($request->available);
         $NewProduct->save();
 
         // $size_product = new ProductSize;

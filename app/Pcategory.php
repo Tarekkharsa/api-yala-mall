@@ -8,7 +8,7 @@ class Pcategory extends Model
 {
 
      public function scategory(){
-        return $this->belongsTo(Scategory::class);
+        return $this->belongsTo(Scategory::class,'scatogory_id');
      }
 
      public function pcategory_size(){

@@ -31,4 +31,8 @@ class Product extends Model
     public function productsize(){
         return $this->hasMany(ProductSize::class);
     }
+
+    public function pCategory(){
+        return $this->belongsTo(Pcategory::class,'pcategory_id');
+     }
 }

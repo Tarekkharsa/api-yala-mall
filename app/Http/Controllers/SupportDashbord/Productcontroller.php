@@ -18,7 +18,8 @@ use App\{
     ShopStatus,
     Pcategory,
     Gallery,
-    Size};
+    Size,
+    ProductSize};
     use App\Http\Controllers\MyFunction;
     use App\Cobon;
 use Carbon\Carbon;
@@ -70,11 +71,35 @@ class Productcontroller extends MyFunction
 
         $Products = Product::with('gallery')
                             ->with('shop.mall')
-                            ->where('available' ,1)
+                            ->with('pCategory.scategory')
                             ->where('id',$id)
-                            ->get();
+                            ->first();
 
         return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $Products] , 200);
+
+    }
+
+           /*
+        This Function getProductSize v1.0
+        Input:  key(required)  , id 
+        Output: Return  Product Size
+    */
+    public function getProductSize(Request $request){
+        // check params 
+        if(!$this->requiredParams($request, ['key','id'])){
+            return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
+        }
+
+        $key = $this->checkParam($request->key);
+        if ($key !== self::KEY) {
+            return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
+        }
+
+        $id = $this->checkParam($request->id);
+
+        $ProductSize = ProductSize::where('product_id',$id)->get();
+
+        return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $ProductSize] , 200);
 
     }
 
