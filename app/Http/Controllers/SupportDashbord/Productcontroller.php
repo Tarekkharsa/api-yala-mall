@@ -218,6 +218,9 @@ class Productcontroller extends MyFunction
         if (isset($request->pcategory_id)) {
             $NewProduct->pcategory_id          = $this->checkParam($request->pcategory_id);
         }
+        if (isset($request->available)) {
+            $NewProduct->available          = $this->checkParam($request->available);
+        }
         $NewProduct->discount          = $discount;        
         $NewProduct->mall_id          = $mall_id;      
         $NewProduct->save();
@@ -231,9 +234,10 @@ class Productcontroller extends MyFunction
         }
         
 
-        $oldImages = Gallery::where('product_id',  $NewProduct->id)->delete();
+        
         
        if(isset($request->images)){
+        $oldImages = Gallery::where('product_id',  $NewProduct->id)->delete();
             if(count($request->images) != 0)
             {
                 foreach($request->images as $one)
