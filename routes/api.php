@@ -207,7 +207,14 @@ Route::group(['prefix' => '/dashbord'], function () {
   Route::get('/getShopByMall', 'SupportDashbord\Shopcontroller@getShopByMall');
   
        Route::get('/getProductSize', 'SupportDashbord\Productcontroller@getProductSize');
-    
+       Route::get('/getCars', 'SupportDashbord\DeliveryController@getCars');
+       
+       Route::get('/getCar', 'SupportDashbord\DeliveryController@getCar');
+
+       Route::post('/addCar', 'Dashbord\DashbordDeliveryController@addCar');
+       Route::post('/updateCar', 'Dashbord\DashbordDeliveryController@updateCar');
+       Route::post('/deleteCar', 'Dashbord\DashbordDeliveryController@deleteCar');
+       
 });
 
 Route::group(['prefix' => '/driver'], function () {

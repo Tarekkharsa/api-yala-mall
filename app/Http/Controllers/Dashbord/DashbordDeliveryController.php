@@ -140,6 +140,62 @@ class DashbordDeliveryController extends MyFunction
 
 
 
+         /*
+        This Function deleteCar v1.0
+        Input:  key(required),id(required)     
+        Output: return message => OK
+    */
+    public function deleteCar(Request $request){
+        // check params 
+        if(!$this->requiredParams($request, ['key','id'])){
+            return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
+        }
+
+        $key = $this->checkParam($request->key);
+        if ($key !== self::KEY) {
+            return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
+        }
+        $id = $this->checkParam($request->id);
+
+        $car = Car::where('id' , $id)->first();
+        if(empty($car)){
+        	return response()->json(['status' => 'error' , 'message' =>  __('errors.car-not-exists') ] , 400);
+        }
+            $car->delete();
+         
+
+        return response()->json(['status' => 'success' , 'message' => 'OK'] , 200);    
+    }
+
+        /*
+        This Function updateCar v1.0
+        Input:  key(required)  ,number(required)      
+        Output: return  Car object
+    */
+    public function updateCar(Request $request){
+        // check params 
+        if(!$this->requiredParams($request, ['key','id'])){
+            return response()->json(['status' => 'error' , 'message' => 'missing  params' ] , 400);
+        }
+
+        $key = $this->checkParam($request->key);
+        $id = $this->checkParam($request->id);
+        if ($key !== self::KEY) {
+            return response()->json(['status' => 'error' , 'message' => 'invalid request' ] , 400);
+        }
+
+
+        $car =  Car::where('id', $id)->first();
+        if (isset($request->number)) {
+            $car->number = $this->checkParam($request->number);
+        }
+
+        $car->save();
+
+        return response()->json(['status' => 'success' , 'message' => 'OK', 'data' => $car] , 200);    
+    }
+
+
      /*
         This Function getDrivers v1.0
         Input:  key(required)        
@@ -245,7 +301,7 @@ class DashbordDeliveryController extends MyFunction
         }
 
         
-   $id = $this->checkParam($request->id);
+         $id = $this->checkParam($request->id);
 
         $updatedriver = Driver::where('id',  $id)->first();
         if (isset($request->username)) {
