@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 23, 2019 at 03:59 PM
+-- Generation Time: Jul 24, 2019 at 04:43 PM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.2.7
 
@@ -44,7 +44,8 @@ CREATE TABLE `bills` (
 INSERT INTO `bills` (`id`, `price`, `shop_id`, `order_id`, `created_at`, `updated_at`) VALUES
 (93, 5000, 2, 98, '2019-07-08 13:07:47', '2019-07-08 13:07:47'),
 (94, 2000, 2, 99, '2019-07-22 19:01:58', '2019-07-22 19:01:58'),
-(95, 77666, 2, 100, '2019-07-22 19:22:18', '2019-07-22 19:22:18');
+(95, 77666, 2, 100, '2019-07-22 19:22:18', '2019-07-22 19:22:18'),
+(96, 5500, 2, 101, '2019-07-24 02:28:17', '2019-07-24 02:28:17');
 
 -- --------------------------------------------------------
 
@@ -76,7 +77,9 @@ INSERT INTO `bill_products` (`id`, `quantity`, `notes`, `sale`, `bill_id`, `prod
 (6, 1, 'Hhh', '1', 95, 24, 1, 0, '2019-07-22 19:22:18', '2019-07-22 19:22:18'),
 (7, 1, 'Vgh', '1', 95, 31, NULL, 0, '2019-07-22 19:22:18', '2019-07-22 19:22:18'),
 (8, 1, 'Vvg', '1', 95, 29, NULL, 0, '2019-07-22 19:22:18', '2019-07-22 19:22:18'),
-(9, 1, 'Hhg', '0.02', 95, 44, 1, 0, '2019-07-22 19:22:18', '2019-07-22 19:22:18');
+(9, 1, 'Hhg', '0.02', 95, 44, 1, 0, '2019-07-22 19:22:18', '2019-07-22 19:22:18'),
+(10, 1, '', '1', 96, 30, NULL, 0, '2019-07-24 02:28:17', '2019-07-24 02:28:17'),
+(11, 1, '', '1', 96, 28, NULL, 0, '2019-07-24 02:28:17', '2019-07-24 02:28:17');
 
 -- --------------------------------------------------------
 
@@ -96,8 +99,9 @@ CREATE TABLE `cars` (
 --
 
 INSERT INTO `cars` (`id`, `number`, `created_at`, `updated_at`) VALUES
-(1, '5552365', NULL, NULL),
-(2, '888888888', '2019-05-07 05:08:54', '2019-05-07 05:08:54');
+(1, '00000000000000052365', NULL, '2019-07-24 15:22:36'),
+(2, '888888888', '2019-05-07 05:08:54', '2019-05-07 05:08:54'),
+(3, '55555', '2019-07-24 15:00:43', '2019-07-24 15:00:43');
 
 -- --------------------------------------------------------
 
@@ -279,7 +283,13 @@ INSERT INTO `favorites` (`id`, `customer_id`, `product_id`, `created_at`, `updat
 (3, 1, 25, '2019-07-06 05:49:41', '2019-07-06 05:49:41'),
 (4, 4, 28, '2019-07-22 18:59:23', '2019-07-22 18:59:23'),
 (5, 4, 28, '2019-07-22 18:59:30', '2019-07-22 18:59:30'),
-(6, 4, 44, '2019-07-22 18:59:42', '2019-07-22 18:59:42');
+(6, 4, 44, '2019-07-22 18:59:42', '2019-07-22 18:59:42'),
+(7, 4, 28, '2019-07-23 23:22:24', '2019-07-23 23:22:24'),
+(8, 4, 28, '2019-07-23 23:22:32', '2019-07-23 23:22:32'),
+(9, 4, 24, '2019-07-23 23:22:49', '2019-07-23 23:22:49'),
+(10, 4, 28, '2019-07-23 23:23:07', '2019-07-23 23:23:07'),
+(11, 4, 28, '2019-07-23 23:23:20', '2019-07-23 23:23:20'),
+(12, 4, 28, '2019-07-23 23:23:28', '2019-07-23 23:23:28');
 
 -- --------------------------------------------------------
 
@@ -354,9 +364,9 @@ CREATE TABLE `malls` (
 --
 
 INSERT INTO `malls` (`id`, `name`, `logo`, `address`, `phone`, `website`, `location_id`, `open_time`, `close_time`, `state`, `created_at`, `updated_at`, `lat`, `lng`) VALUES
-(1, 'سيتي مول', 'orland-square-mall-05.jpg', 'المزه', '', '', 1, '09:00:00', '21:00:00', 1, '2019-04-22 21:00:00', '2019-07-23 10:35:05', NULL, NULL),
-(3, 'مول قاسيون', 'metropol-7.jpg', 'اوتستراد حاميش', '0935639194', '', 2, '07:00:00', '10:00:00', 0, '2019-04-22 21:00:00', '2019-07-08 11:31:07', NULL, NULL),
-(7, 'mall1', 'metropol-7.jpg', 'البرامكه', '09336598562', 'www.mall.com', 3, '10:00:00', '17:00:00', 1, '2019-05-04 10:26:55', '2019-07-23 10:35:05', NULL, NULL),
+(1, 'سيتي مول', 'orland-square-mall-05.jpg', 'المزه', '', '', 1, '09:00:00', '21:00:00', 1, '2019-04-22 21:00:00', '2019-07-24 08:08:06', NULL, NULL),
+(3, 'مول قاسيون', 'metropol-7.jpg', 'اوتستراد حاميش', '0935639194', '', 2, '07:00:00', '10:00:00', 0, '2019-04-22 21:00:00', '2019-07-24 08:08:06', NULL, NULL),
+(7, 'mall1', 'metropol-7.jpg', 'البرامكه', '09336598562', 'www.mall.com', 3, '10:00:00', '17:00:00', 1, '2019-05-04 10:26:55', '2019-07-24 08:08:06', NULL, NULL),
 (8, 'hgggggggggggggg', '1563877111.png', 'tareqvyvhgsc', '0944901335', 'www.tareq.com', 2, '13:15:00', '13:15:00', 0, '2019-07-23 11:18:31', '2019-07-23 14:43:59', 22, 11);
 
 -- --------------------------------------------------------
@@ -541,7 +551,8 @@ CREATE TABLE `orders` (
 INSERT INTO `orders` (`id`, `price`, `delivery_cost`, `order_time`, `delivery_time`, `order_status_id`, `customer_id`, `customer_location_id`, `driver_id`, `created_at`, `updated_at`) VALUES
 (98, 5000, 0, '2019-07-08 16:07:47', NULL, 3, 1, 1, 1, '2019-07-05 13:07:47', '2019-07-16 09:28:03'),
 (99, 2000, 0, '2019-07-22 21:01:58', NULL, 1, 4, 11, NULL, '2019-07-22 19:01:58', '2019-07-22 19:01:58'),
-(100, 12333, 0, '2019-07-22 21:22:18', NULL, 1, 4, 11, NULL, '2019-07-22 19:22:18', '2019-07-22 19:22:18');
+(100, 12333, 0, '2019-07-22 21:22:18', NULL, 1, 4, 11, NULL, '2019-07-22 19:22:18', '2019-07-22 19:22:18'),
+(101, 5500, 0, '2019-07-24 04:28:17', NULL, 1, 4, 11, NULL, '2019-07-24 02:28:17', '2019-07-24 02:28:17');
 
 -- --------------------------------------------------------
 
@@ -763,11 +774,12 @@ INSERT INTO `rate_services` (`id`, `customer_id`, `shop_id`, `driver_id`, `produ
 (14, 1, NULL, 2, NULL, 3, 'tttttttt', '2019-07-06 10:44:46', '2019-07-06 10:46:54'),
 (15, 1, NULL, NULL, 42, 2, 'test7', '2019-07-16 07:51:04', '2019-07-16 07:53:05'),
 (16, 4, NULL, NULL, 24, 2, 'null', '2019-07-22 18:50:14', '2019-07-22 18:50:14'),
-(17, 4, 2, NULL, NULL, 3, 'ععه', '2019-07-22 18:51:34', '2019-07-22 18:51:39'),
+(17, 4, 2, NULL, NULL, 4, 'noNote', '2019-07-22 18:51:34', '2019-07-24 02:26:10'),
 (18, 4, 4, NULL, NULL, 2, 'Hh', '2019-07-22 18:55:17', '2019-07-22 18:55:17'),
 (19, 4, 5, NULL, NULL, 2, 'Yy', '2019-07-22 18:55:27', '2019-07-22 18:55:27'),
 (20, 4, NULL, NULL, 25, 3, 'Yyu', '2019-07-22 18:55:42', '2019-07-22 18:55:42'),
-(22, 1, NULL, 1, NULL, 3, 'tttttttt', '2019-07-23 13:39:18', '2019-07-23 13:39:18');
+(22, 1, NULL, 1, NULL, 3, 'tttttttt', '2019-07-23 13:39:18', '2019-07-23 13:39:18'),
+(23, 4, NULL, 1, NULL, 3, 'Hgg', '2019-07-23 19:29:09', '2019-07-23 19:29:09');
 
 -- --------------------------------------------------------
 
@@ -876,7 +888,7 @@ CREATE TABLE `shops` (
 --
 
 INSERT INTO `shops` (`id`, `name`, `logo`, `shop_phone`, `floor`, `open_time`, `close_time`, `shop_status_id`, `sale`, `min_order_cost`, `mall_id`, `owner_id`, `rate`, `lat`, `lng`, `created_at`, `updated_at`) VALUES
-(2, 'محل التل', NULL, NULL, '3', '01:00:00', '15:00:00', 1, 1, 1000, 1, 1, 4, 0, 0, NULL, '2019-07-22 18:51:39'),
+(2, 'محل التل', NULL, NULL, '3', '01:00:00', '15:00:00', 1, 1, 1000, 1, 1, 4, 0, 0, NULL, '2019-07-24 02:26:10'),
 (3, 'محل شحود', NULL, NULL, '5', '01:00:00', '10:00:00', 1, 1, 0, 3, 3, 0, 0, 0, NULL, '2019-05-28 11:28:14'),
 (4, 'محل فراس', NULL, NULL, '5', '01:00:00', '14:00:00', 2, 1, 2000, 1, 2, 2, 0, 0, NULL, '2019-07-22 18:55:17'),
 (5, 'محل التل 2', NULL, NULL, '3', '01:00:00', '13:00:00', 2, 1, 1000, 1, 1, 2, 0, 0, NULL, '2019-07-22 18:55:27'),
@@ -1008,8 +1020,8 @@ CREATE TABLE `sliders` (
 --
 
 INSERT INTO `sliders` (`id`, `title`, `image`, `created_at`, `updated_at`) VALUES
-(1, 'slider', 'slider', NULL, NULL),
-(2, 'slider2', 'slider2', NULL, NULL);
+(1, 'slider', 'slide1.png', NULL, NULL),
+(2, 'slider2', 'slide2.png', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1413,19 +1425,19 @@ ALTER TABLE `user_roles`
 -- AUTO_INCREMENT for table `bills`
 --
 ALTER TABLE `bills`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
 
 --
 -- AUTO_INCREMENT for table `bill_products`
 --
 ALTER TABLE `bill_products`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `cars`
 --
 ALTER TABLE `cars`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `cities`
@@ -1467,13 +1479,13 @@ ALTER TABLE `drivers`
 -- AUTO_INCREMENT for table `favorites`
 --
 ALTER TABLE `favorites`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `galleries`
 --
 ALTER TABLE `galleries`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `locations`
@@ -1521,7 +1533,7 @@ ALTER TABLE `offers`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
 
 --
 -- AUTO_INCREMENT for table `order_statuses`
@@ -1551,19 +1563,19 @@ ALTER TABLE `permissions`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `product_size`
 --
 ALTER TABLE `product_size`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `rate_services`
 --
 ALTER TABLE `rate_services`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `roles`
